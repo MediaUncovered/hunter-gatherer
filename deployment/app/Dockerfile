@@ -8,7 +8,11 @@ MAINTAINER todorus
 RUN apt-get update
 
 # Install Python and Basic Python Tools
-RUN apt-get install -y git python python-dev python-distribute python-pip libpq-dev
+RUN apt-get install -y git python python-dev python-distribute python-pip libpq-dev curl
+# Install headless Selenium drivers
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y nodejs libfontconfig
+RUN npm install -g phantomjs
 
 # Install Python requirements
 COPY deployment/app/requirements.txt /deployment/requirements.txt
