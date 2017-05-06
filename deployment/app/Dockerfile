@@ -11,7 +11,7 @@ RUN apt-get update
 RUN apt-get install -y git python python-dev python-distribute python-pip libpq-dev
 
 # Install Python requirements
-COPY deployment/api/requirements.txt /deployment/requirements.txt
+COPY deployment/app/requirements.txt /deployment/requirements.txt
 RUN pip install -r /deployment/requirements.txt
 
 # Copy app code
