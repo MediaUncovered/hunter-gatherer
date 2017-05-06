@@ -5,6 +5,7 @@ articles and the url of the next page in the archive.
 import logging
 import requests
 
+
 class Page():
     '''
     A result object for an archive crawl.
@@ -45,20 +46,18 @@ class Crawler():
         # in case we want to reprocess some urls with a different extraction
         self.version = version
 
-
     def crawl(self, archive_url):
         req = requests.get(archive_url)
-        page = __extract(reg.text)
-        __store(page)
+        page = self.__extract(req.text)
+        self.__store(page)
 
-
-    def __extract(self, html_text):
+    def extract(self, html_text):
         raise Exception("TODO implement")
         page = Page()
         # TODO use the css to get all the urls needed from the page and store them in the Page object
         # TODO use the css to get the next url needed from the page and store it in the Page object
         return page
 
-    def __store(self, page):
+    def store(self, page):
         logging.warning("Storing archive pages isn't implemented yet")
         # TODO store the page in the datastore
