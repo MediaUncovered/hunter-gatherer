@@ -7,8 +7,3 @@ class Order():
     def __init__(self, url, crawler):
         self.url = url
         self.crawler = crawler
-
-
-def queue(order):
-    logging.warning("queing Orders isn't implemented yet")
-    # TODO store the Order in the datastore

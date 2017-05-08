@@ -9,27 +9,33 @@ from app.queue import Order
 test_dir_path = os.path.dirname(__file__)
 
 
+class MockDriver():
+    def __init__(self, page_source):
+        self.page_source = page_source
+
+
 class TestArchiveCrawling(unittest.TestCase):
 
-    def test_ny(self):
+    def setUp(self):
         # Given an archive page of the NY Times
         test_data_path = os.path.join(test_dir_path, 'ny_archive_sample.html')
         with open(test_data_path, 'r') as f:
-            html_data = f.read().replace('\n', '')
+            self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
-        queries = [
+        self.queries = [
             Query(
                 query="//li[@class='story noThumb']//a/@href",
                 crawler="ARTICLE"
             )
         ]
+
+    def test_extraction(self):
         crawler = Crawler(
-            queries,
-            wait_query="//li[@class='story noThumb']//a/@href"
+            self.queries
         )
 
         # When the crawler extracts data from the archive page
-        result = crawler.extract(html_data, queries)
+        result = crawler.extract(self.html_data, crawler.queries)
 
         # Then it will have extracted the Orders
         expected = [
