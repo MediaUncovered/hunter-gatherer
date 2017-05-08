@@ -2,37 +2,50 @@
 Tests for the Archive crawler
 '''
 import unittest
-from app.crawler.archive import Crawler
+import os
+from app.crawler import Crawler, Query
+from app.queue import Order
+
+test_dir_path = os.path.dirname(__file__)
 
 
 class TestArchiveCrawling(unittest.TestCase):
 
     def test_ny(self):
         # Given an archive page of the NY Times
-        html_data = None  # TODO get data
+        test_data_path = os.path.join(test_dir_path, 'ny_archive_sample.html')
+        with open(test_data_path, 'r') as f:
+            html_data = f.read().replace('\n', '')
+        # And a Crawler configured to extract article urls
+        queries = [
+            Query(
+                query="//li[@class='story noThumb']//a/@href",
+                crawler="ARTICLE"
+            )
+        ]
+        crawler = Crawler(
+            queries,
+            wait_query="//li[@class='story noThumb']//a/@href"
+        )
 
         # When the crawler extracts data from the archive page
-        crawler = Crawler()
-        page = crawler.extract(html_data)
+        result = crawler.extract(html_data, queries)
 
-        # Then it will have extracted the article urls
-        expected_article_urls = []
-        self.assertEquals(expected_article_urls, page.article_urls)
-        # And it will have extracted the url to the next archive page
-        expected_archive_url = ""
-        self.assertEquals(expected_archive_url, page.next_page_url)
-
-    def test_daily_times(self):
-        # Given an archive page of the Daily Times
-        html_data = None  # TODO get data
-
-        # When the crawler extracts data from the archive page
-        crawler = Crawler()
-        page = crawler.extract(html_data)
-
-        # Then it will have extracted the article urls
-        expected_article_urls = []
-        self.assertEquals(expected_article_urls, page.article_urls)
-        # And it will have extracted the url to the next archive page
-        expected_archive_url = ""
-        self.assertEquals(expected_archive_url, page.next_page_url)
+        # Then it will have extracted the Orders
+        expected = [
+            Order("https://www.nytimes.com/1981/01/01/nyregion/notes-on-people-207391.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/obituaries/marshall-mcluhan-author-dies-declared-medium-is-the-message.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/business/thursday-january-1-1981-the-economy.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/arts/wncn-fm-is-put-up-for-sale-by-gaf.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/nyregion/new-year-s-day.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/us/around-the-nation-irs-seeking-16.6-million-in-back-taxes-from-welch.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/us/no-headline-207370.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/nyregion/7koch-box-a-caution-from-koch-on-investing-in-camels.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/world/chomsky-stirs-french-storm-in-a-demitasse.html", "ARTICLE"),
+            Order("https://www.nytimes.com/1981/01/01/nyregion/45-year-terms-given-2-in-bank-robberies.html", "ARTICLE")
+        ]
+        self.assertEquals(len(expected), len(result))
+        for index, expected_order in enumerate(expected):
+            result_order = result[index]
+            self.assertEquals(expected_order.url, result_order.url)
+            self.assertEquals(expected_order.crawler, result_order.crawler)
