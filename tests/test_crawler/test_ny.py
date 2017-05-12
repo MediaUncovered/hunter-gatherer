@@ -9,9 +9,21 @@ from app.queue import Order
 test_dir_path = os.path.dirname(__file__)
 
 
-class MockDriver():
+class MockFetcher():
     def __init__(self, page_source):
         self.page_source = page_source
+
+    def fetch(self, url, wait_query):
+        return self.page_source
+
+
+class MockQueuer():
+
+    def __init__(self):
+        self.orders = []
+
+    def que(self, order):
+        self.orders.append(order)
 
 
 class TestArchiveCrawling(unittest.TestCase):
@@ -31,13 +43,15 @@ class TestArchiveCrawling(unittest.TestCase):
 
     def test_extraction(self):
         crawler = Crawler(
-            self.queries
+            self.queries,
+            fetcher=MockFetcher(self.html_data),
+            queuer=MockQueuer()
         )
 
         # When the crawler extracts data from the archive page
-        result = crawler.extract(self.html_data, crawler.queries)
+        crawler.crawl("testUrl")
 
-        # Then it will have extracted the Orders
+        # Then it will have queued the Orders
         expected = [
             Order("https://www.nytimes.com/1981/01/01/nyregion/notes-on-people-207391.html", "ARTICLE"),
             Order("https://www.nytimes.com/1981/01/01/obituaries/marshall-mcluhan-author-dies-declared-medium-is-the-message.html", "ARTICLE"),
@@ -50,8 +64,8 @@ class TestArchiveCrawling(unittest.TestCase):
             Order("https://www.nytimes.com/1981/01/01/world/chomsky-stirs-french-storm-in-a-demitasse.html", "ARTICLE"),
             Order("https://www.nytimes.com/1981/01/01/nyregion/45-year-terms-given-2-in-bank-robberies.html", "ARTICLE")
         ]
-        self.assertEquals(len(expected), len(result))
+        self.assertEquals(len(expected), len(crawler.queuer.orders))
         for index, expected_order in enumerate(expected):
-            result_order = result[index]
+            result_order = crawler.queuer.orders[index]
             self.assertEquals(expected_order.url, result_order.url)
             self.assertEquals(expected_order.crawler_label, result_order.crawler_label)
