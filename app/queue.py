@@ -4,6 +4,6 @@ class Order():
     stored in a datastore and converted into a Job by a JobRunner.
     '''
 
-    def __init__(self, url, crawler):
+    def __init__(self, url, crawler_label):
         self.url = url
-        self.crawler = crawler
+        self.crawler_label = crawler_label

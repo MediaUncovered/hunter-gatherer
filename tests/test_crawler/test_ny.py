@@ -54,4 +54,4 @@ class TestArchiveCrawling(unittest.TestCase):
         for index, expected_order in enumerate(expected):
             result_order = result[index]
             self.assertEquals(expected_order.url, result_order.url)
-            self.assertEquals(expected_order.crawler, result_order.crawler)
+            self.assertEquals(expected_order.crawler_label, result_order.crawler_label)
