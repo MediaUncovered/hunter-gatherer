@@ -7,4 +7,4 @@ services:
       dockerfile: deployment/test/Dockerfile
     image: todorus/news_analysis-hunter_gatherer:test
     volumes:
-      - ../reports:/frame/results
+      - ../reports:/frame/reports

@@ -25,6 +25,7 @@ RUN pip install -r /deployment/test/requirements.txt
 COPY app /frame/app
 COPY tests /frame/tests
 COPY deployment/test/nose2.cfg /frame/nose2.cfg
+COPY deployment/test/coverage.cfg /frame/coverage.cfg
 
 # Start tests
 WORKDIR /frame
