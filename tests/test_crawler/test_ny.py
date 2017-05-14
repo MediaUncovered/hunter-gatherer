@@ -49,7 +49,8 @@ class TestArchiveCrawling(unittest.TestCase):
         )
 
         # When the crawler extracts data from the archive page
-        crawler.crawl("testUrl")
+        test_url = "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/1/allauthors/oldest/"
+        crawler.crawl(test_url)
 
         # Then it will have queued the Orders
         expected = [
