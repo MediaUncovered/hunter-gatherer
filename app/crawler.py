@@ -7,6 +7,7 @@ from selenium import webdriver
 from queue import Order
 from lxml import etree
 from processor import Archiver
+import urlparse
 
 
 class Query(object):
@@ -88,17 +89,17 @@ class Crawler(object):
         if self.download:
             self.archiver.archive(html)
 
-        orders = self.extract(html, self.queries)
+        orders = self.extract(url, html, self.queries)
         for order in orders:
             self.queuer.que(order)
 
-    def extract(self, html, queries):
+    def extract(self, original_url, html, queries):
         tree = etree.HTML(html)
         orders = []
         for query in queries:
             urls = tree.xpath(query.query)
             for url in urls:
                 orders.append(
-                    Order(url, query.crawler)
+                    Order(urlparse.urljoin(original_url, url), query.crawler)
                 )
         return orders
