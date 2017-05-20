@@ -24,3 +24,5 @@ There is also a script to run the tests.
 ./test.sh
 ```
 Will rebuild all the docker images to make sure everything is up to the latest production configs. In addition it will also build and launch a test container which will run unit tests.
+
+**Any Pull Request that does not pass the test suite will not be merged**
