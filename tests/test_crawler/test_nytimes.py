@@ -30,7 +30,7 @@ class TestArchiveCrawling(unittest.TestCase):
 
     def setUp(self):
         # Given an archive page of the NY Times
-        test_data_path = os.path.join(test_dir_path, 'ny_archive_sample.html')
+        test_data_path = os.path.join(test_dir_path, 'data/ny_archive_sample.html')
         with open(test_data_path, 'r') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
