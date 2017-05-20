@@ -238,9 +238,6 @@ class TestYearCrawling(unittest.TestCase):
              Order("http://old.themoscowtimes.com/sitemap/free/1992/12/30.html", "MOSCOW_DAY")
         ]
 
-        # for order in crawler.queuer.orders:
-        #     print order.url
-
         self.assertEquals(len(expected), len(crawler.queuer.orders))
         for index, expected_order in enumerate(expected):
             result_order = crawler.queuer.orders[index]
