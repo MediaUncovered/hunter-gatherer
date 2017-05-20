@@ -243,3 +243,62 @@ class TestYearCrawling(unittest.TestCase):
             result_order = crawler.queuer.orders[index]
             self.assertEquals(expected_order.url, result_order.url)
             self.assertEquals(expected_order.crawler_label, result_order.crawler_label)
+
+
+class TestDayCrawling(unittest.TestCase):
+
+    def setUp(self):
+        # Given an archive page of the NY Times
+        test_data_path = os.path.join(test_dir_path, 'data/themoscowtimes_day_sample.html')
+        with open(test_data_path, 'r') as f:
+            self.html_data = f.read().replace('\n', '')
+        # And a Crawler configured to extract article urls
+        self.queries = [
+            Query(
+                query="//div[@class='content']/div[@class='left']//a/@href",
+                crawler="ARTICLE"
+            )
+        ]
+
+    def test_extraction(self):
+        crawler = Crawler(
+            self.queries,
+            fetcher=MockFetcher(self.html_data),
+            queuer=MockQueuer()
+        )
+
+        # When the crawler extracts data from the archive page
+        test_url = "http://old.themoscowtimes.com/sitemap/free/1992/5/8.html"
+        crawler.crawl(test_url)
+
+        # Then it will have queued the Orders
+        expected = [
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/american-was-assassinated-family-says/221589.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/pepsi-to-save-vodka-cola-deal/221588.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/soviet-trucks-to-roll-westwards/221587.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/british-womens-club-formed/221586.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/yacht-club-launches-lessons-and-cruises/221585.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/top-yeltsin-advisor-asks-to-step-down/221584.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/birthday-magic/221583.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/russians-clash-with-u-s-on-nuclear-arms-control/221582.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/health-workers-strike-threatens-government/221581.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/vodka-price-hikes-unlikely-to-effect-drinking-habits/221580.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/firm-denies-finding-cpsu-billions/221579.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/secret-archives-just-a-peek/221578.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/tretyakov-promised-15-million/221577.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/victory-day-festivities/221576.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/communists-fights-back/221575.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/jack-the-ripper-sentenced-to-death/221574.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/corpses-crowd-city-morgues/221573.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/ex-spy-blake-calls-chocolate-cake-reports-rubbish/221572.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/asylum-seeking-north-korean-under-siege/221571.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/the-man-who-would-be-president/221570.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/teen-mafia-rules-moscow-streets/221569.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/opposition-forces-oust-tajik-president/221568.html", "ARTICLE"),
+            Order("http://old.themoscowtimes.com/sitemap/free/1992/5/article/august-1-convertible-ruble-a-long-shot-bet/221567.html", "ARTICLE")
+        ]
+        self.assertEquals(len(expected), len(crawler.queuer.orders))
+        for index, expected_order in enumerate(expected):
+            result_order = crawler.queuer.orders[index]
+            self.assertEquals(expected_order.url, result_order.url)
+            self.assertEquals(expected_order.crawler_label, result_order.crawler_label)
