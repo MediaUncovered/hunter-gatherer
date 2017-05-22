@@ -1,6 +1,6 @@
-from crawler import Query, Crawler
+from .crawler import Query, Crawler
 
-class CrawlerDef():
+class CrawlerDef(object):
 
     def __init__(self, label=None, crawler=None, queries=[], download=False,
                  wait_query=None):

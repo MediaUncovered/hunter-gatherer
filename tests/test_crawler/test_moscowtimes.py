@@ -31,7 +31,7 @@ class TestAllCrawling(unittest.TestCase):
     def setUp(self):
         # Given an archive page of the NY Times
         test_data_path = os.path.join(test_dir_path, 'data/themoscowtimes_all_sample.html')
-        with open(test_data_path, 'r') as f:
+        with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
         self.queries = [
@@ -93,7 +93,7 @@ class TestYearCrawling(unittest.TestCase):
     def setUp(self):
         # Given a year page of the moscow times
         test_data_path = os.path.join(test_dir_path, 'data/themoscowtimes_year_sample.html')
-        with open(test_data_path, 'r') as f:
+        with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
         self.queries = [
@@ -250,7 +250,7 @@ class TestDayCrawling(unittest.TestCase):
     def setUp(self):
         # Given an archive page of the NY Times
         test_data_path = os.path.join(test_dir_path, 'data/themoscowtimes_day_sample.html')
-        with open(test_data_path, 'r') as f:
+        with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
         self.queries = [

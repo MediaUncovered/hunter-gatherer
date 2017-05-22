@@ -4,10 +4,10 @@ optionally store the documents it has visited.
 '''
 import logging
 from selenium import webdriver
-from queue import Order
+from .queue import Order
 from lxml import etree
-from processor import Archiver
-import urlparse
+from .processor import Archiver
+import urllib.parse as urlparse
 
 
 class Query(object):
@@ -43,7 +43,7 @@ class PhantomFetcher(Fetcher):
         super(PhantomFetcher, self).__init__(driver)
 
 
-class Queuer():
+class Queuer(object):
 
     def queue(order):
         logging.warning("queing Orders isn't implemented yet")
