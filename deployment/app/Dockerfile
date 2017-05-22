@@ -14,12 +14,14 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs libfontconfig
 RUN npm install -g phantomjs
 ENV PATH="/usr/bin/phantomjs:${PATH}"
-# Install newspaper ubuntu requirements
-RUN apt-get install -y libxml2-dev libxslt-dev
 
 # Install Python requirements
 COPY deployment/app/requirements.txt /deployment/requirements.txt
 RUN pip3 install -r /deployment/requirements.txt
+
+# Install newspaper ubuntu requirements
+RUN apt-get install -y libxml2-dev libxslt-dev
+RUN curl https://raw.githubusercontent.com/codelucas/newspaper/master/download_corpora.py | python3
 
 # Copy app code
 COPY    app   /app
