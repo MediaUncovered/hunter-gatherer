@@ -2,25 +2,12 @@
 Crawls an XML/HTML document. It can extract urls for further crawling and
 optionally store the documents it has visited.
 '''
-import logging
+from . import Query
 from selenium import webdriver
-from .queue import Order
+from .queue import Order, Queuer
 from lxml import etree
 from .processor import Archiver
 import urllib.parse as urlparse
-
-
-class Query(object):
-    '''
-    An instruction for how a Crawler should process a page.
-    :param query: a string containing a css query, that will result in one or
-                  more urls that are to extracted from the page.
-    :param crawler: a string with a crawlers label.
-    '''
-
-    def __init__(self, query=None, crawler=None):
-        self.query = query
-        self.crawler = crawler
 
 
 class Fetcher(object):
@@ -41,13 +28,6 @@ class PhantomFetcher(Fetcher):
         driver = webdriver.PhantomJS()
         driver.implicitly_wait(10)
         super(PhantomFetcher, self).__init__(driver)
-
-
-class Queuer(object):
-
-    def queue(order):
-        logging.warning("queing Orders isn't implemented yet")
-        # TODO store the Order in the datastore
 
 
 class Crawler(object):

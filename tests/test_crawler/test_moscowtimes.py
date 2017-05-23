@@ -3,7 +3,8 @@ Tests for the Moscow times crawlers
 '''
 import unittest
 import os
-from app.crawler import Crawler, Query
+from app import Query
+from app.crawler import Crawler
 from app.queue import Order
 
 test_dir_path = os.path.dirname(__file__)
