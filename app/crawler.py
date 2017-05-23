@@ -2,11 +2,10 @@
 Crawls an XML/HTML document. It can extract urls for further crawling and
 optionally store the documents it has visited.
 '''
-from . import Query
 from selenium import webdriver
 from .queue import Order, Queuer
 from lxml import etree
-from .processor import Archiver
+from .database import Archiver
 import urllib.parse as urlparse
 
 

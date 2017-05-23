@@ -1,4 +1,15 @@
-from .crawler import Query, Crawler
+class Query(object):
+    '''
+    An instruction for how a Crawler should process a page.
+    :param query: a string containing a css query, that will result in one or
+                  more urls that are to extracted from the page.
+    :param crawler: a string with a crawlers label.
+    '''
+
+    def __init__(self, query=None, crawler=None):
+        self.query = query
+        self.crawler = crawler
+
 
 class CrawlerDef(object):
 
@@ -9,42 +20,3 @@ class CrawlerDef(object):
         self.queries = queries
         self.download = download
         self.wait_query
-
-crawlers = {
-    "ARTICLE": CrawlerDef(
-        label="ARTICLE",
-        crawler=Crawler,
-        queries=[],
-        download=True
-    ),
-    "NY_ARCHIVE": CrawlerDef(
-        label="NY_ARCHIVE",
-        crawler=Crawler,
-        queries=[
-            Query(
-                query="//li[@class='story noThumb']//a/@href",
-                crawler="ARTICLE"
-            )
-        ],
-        download=False,
-        wait_query="//li[@class='story noThumb']//a/@href"
-    ),
-    "DAILY_YEARS": CrawlerDef(
-        label="DAILY_YEARS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-    "DAILY_MONTHS": CrawlerDef(
-        label="DAILY_MONTHS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-    "DAILY_DAYS": CrawlerDef(
-        label="DAILY_DAYS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-}

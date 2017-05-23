@@ -3,7 +3,7 @@ Tests for the Archive crawler
 '''
 import unittest
 import os
-from app import Query
+from app.config import Query
 from app.crawler import Crawler
 from app.queue import Order
 
