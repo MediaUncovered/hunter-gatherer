@@ -1,5 +1,5 @@
-import datetime
-from lxml import etree
+import unicodedata
+import lxml.html as html
 
 
 class Processor(object):
@@ -12,26 +12,31 @@ class Processor(object):
         self.month_queries = month_queries
         self.date_queries = date_queries
 
-    def process(self, url, html):
-        title = self.process_queries(url, html, self.title_queries)
-        body = self.process_queries(url, html, self.body_queries)
-        year = self.process_queries(url, html, self.year_queries)
-        month = self.process_queries(url, html, self.month_queries)
-        date = self.process_queries(url, html, self.date_queries)
+    def process(self, url, html_binary, encoding="utf-8"):
+        html_string = html_binary.decode(encoding).encode("utf-8")
+        tree = html.fromstring(html_string)
+
+        title = self.process_queries(url, tree, self.title_queries)
+        body = self.process_queries(url, tree, self.body_queries)
+        year = self.process_queries(url, tree, self.year_queries)
+        month = self.process_queries(url, tree, self.month_queries)
+        date = self.process_queries(url, tree, self.date_queries)
 
         return Document(title=title, body=body)
 
-        # return Document(title=title, body=body,
-        #                 datetime=datetime.datetime(year, month, date))
-
-    def process_queries(self, url, html, queries):
-        result = ''
-        tree = etree.HTML(html)
+    def process_queries(self, url, tree, queries):
+        result = b''
+        space = " ".encode("utf-8")
         for query in queries:
             matches = tree.xpath(query.query)
             for match in matches:
-                result += match
-        return result
+                encoded = str(match).encode("utf-8")
+                if len(result) > 0:
+                    result += space
+                result += encoded
+
+        normalized = unicodedata.normalize("NFKD", result.decode("utf-8"))
+        return normalized
 
 
 class Document(object):

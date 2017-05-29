@@ -9,7 +9,8 @@ from app.processor import Processor
 test_dir_path = os.path.dirname(__file__)
 
 
-class TestMoscowTimesProcessing(unittest.TestCase):
+@unittest.skip("PENDING")
+class TestProcessingNyTimes(unittest.TestCase):
 
     def setUp(self):
         self.subject = Processor()
@@ -17,8 +18,8 @@ class TestMoscowTimesProcessing(unittest.TestCase):
         # Given an article page of the Moscow Times
         self.source_url = "https://www.nytimes.com/reuters/2017/05/22/us/politics/22reuters-usa-budget.html"
         test_data_path = os.path.join(test_dir_path, 'data/nytimes_sample.html')
-        with open(test_data_path, 'r', encoding='cp1251') as f:
-            self.html_data = f.read().replace('\n', '')
+        with open(test_data_path, 'rb') as f:
+            self.html_data = f.read()
 
     def test_processing(self):
 

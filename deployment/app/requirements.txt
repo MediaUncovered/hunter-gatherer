@@ -1,4 +1,4 @@
 selenium==3.4.2
 lxml==3.7.3
 cov-core==1.15.0
-newspaper3k==0.1.9
+chardet==3.0.3

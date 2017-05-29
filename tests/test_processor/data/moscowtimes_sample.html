@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
@@ -125,16 +123,16 @@ function update_calendar() {
 }
 
 function callServer(month,year) {
-  // Создать URL для подключения
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   var url = "/scripts/CalendarUpdate.php?month=" + escape(month) + "&year=" + escape(year);
 
-  // Открыть соединение с сервером
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.open("GET", url, true);
 
-  // Установить функцию для сервера, которая выполнится после его ответа
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.onreadystatechange = update_calendar;
 
-  // SПередать запрос
+  // SпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.send(null);
 }
 
@@ -146,16 +144,16 @@ function update_photo() {
 }
 
 function callPhotoServer(photo, article, lang) {
-  // Создать URL для подключения
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   var url = "/scripts/PhotoUpdate.php?photo=" + escape(photo) + "&article=" + escape(article) + '&lang=' + escape(lang);
 
-  // Открыть соединение с сервером
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.open("GET", url, true);
 
-  // Установить функцию для сервера, которая выполнится после его ответа
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.onreadystatechange = update_photo;
 
-  // SПередать запрос
+  // SпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.send(null);
 }
 
@@ -163,16 +161,16 @@ function update_counter() {
 }
 
 function callCounterServer () {
-  // Создать URL для подключения
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   var url = "/scripts/CounterUpdate.php?article=";
 
-  // Открыть соединение с сервером
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.open("GET", url, true);
 
-  // Установить функцию для сервера, которая выполнится после его ответа
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.onreadystatechange = update_counter;
 
-  // SПередать запрос
+  // SпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
   xmlHttp.send(null);
 }
 </script>
@@ -268,7 +266,7 @@ function setCookie4TMTtoolbarAd (typeId) {
 <div class="inner">
 <a href="/rss/toolbars/closeAd.php?backUrl=/sitemap/free/2014/1/article/netherlands-extradites-russian-accused-of-overseeing-shipments-of-cocaine-stashed-in-bananas/492579.html" onclick="setCookie4TMTtoolbarAd (2);document.getElementById('TMTtoolbarAd').style.display='none';return false;" class="close_mac"></a>
 <a href="/rss/toolbars/install.php" onclick="setCookie4TMTtoolbarAd (1);return false;" class="button">Install</a>
-<p>Get the latest updates as we post them — right on your browser</p>
+<p>Get the latest updates as we post them пїЅ right on your browser</p>
 </div>
 </div>
 <script type="text/javascript">
@@ -350,11 +348,11 @@ img.src = 'http://www.tns-counter.ru/V13a***R>' + document.referrer.replace(/\*/
           <br>
         </td>
       </tr>
-      
+
     </table>
   </form>
 </div>
-  
+
 <div class="popup" style="display:none;position:absolute;top:0;left:0;" id="popup"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td id="popup_text"></td></tr><tr><td align="center" style="padding-top:20px;"><input id="popup_close" type="button" value="Close" onclick="closePopup ();"></td></tr></table></div>
 <script type="text/javascript" language="Javascript">
 function showPopup (text, close_text, width) {
@@ -397,11 +395,11 @@ function closePopup () {
 																<a style="margin:0" href="/guides/index.php">Guides</a>
 																<a style="margin:0" href="/books/index.php">Our Books</a>
 																<a style="margin:0;color:#0066b3" href="/awards2015/">Awards</a>
-																	
+
 </div></div>
 			<div class="top_banner">
 			<script type='text/javascript'>
-				// переход по двум ссылкам при нажатии на баннер Open Innovations Forum 2013
+				// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Open Innovations Forum 2013
 				jQuery(document).ready(function(){
 					jQuery('#banner2').on('click', 'div > a', function(){
 						var correctId = '3197656',
@@ -431,12 +429,12 @@ function closePopup () {
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>			</div>
 		</div>
-	  <div class="top"> 	
+	  <div class="top">
     <table>
       <tbody>
         <tr>
           <td class="logo" rowspan="2">
-          				          																																																							
+
           	<a href="/" title="Home">
                	<img src="/bitrix/templates/tmt/img/logo.gif" alt="Home" />
                </a>          </td>
@@ -457,18 +455,18 @@ function closePopup () {
           <td class="last_issue">
 	            .
 <!-- updated -->
-            Last Updated: 
-            07/27/2016 
+            Last Updated:
+            07/27/2016
 	<a onclick="return showLayer('calendar',250,200);" href="#"><img height="7" width="9" src="/bitrix/templates/tmt/img/calendar.gif" /></a></td>
 	          <td class="login">
-            <img height="12" width="10" alt="" src="/bitrix/templates/tmt/img/login.gif" />My profile: 
+            <img height="12" width="10" alt="" src="/bitrix/templates/tmt/img/login.gif" />My profile:
             <a onclick="return showLayer('logindiv',360,550);" href="#login">Login</a> or <a href="/register/index.php">register</a> for free
           </td>
  	</tr>
       </tbody>
     </table>
    	</div>
- 
+
   <div class="top_navig">
 	<div class="follow" style="width:215px;margin-right:0">
   <span class="links">Follow us on&nbsp;</span>
@@ -513,21 +511,21 @@ function closePopup () {
                             <div class="article_img_note" style="">
                     <span class="article_img_author">Flickr</span><span class="article_img_description">Traffickers have used bananas to ship cocaine from Latin America to Europe.</span>                </div>
                             <div class="article_text">
-            
+
 <p>Dutch authorities have handed over to&nbsp;Russia a&nbsp;man accused of&nbsp;masterminding a&nbsp;major drug operation that saw millions of&nbsp;dollars' worth of&nbsp;cocaine smuggled into&nbsp;Russia hidden in&nbsp;banana shipments.</p>
- 
+
 <p>The&nbsp;crime ring, operating since 2003, was busted in&nbsp;2010, but its alleged leader Vladimir Krasavchikov fled prosecution, Russia's Interior Ministry said Saturday.</p>
- 
+
 <p>Krasavchikov was held in&nbsp;the Netherlands in&nbsp;early 2012, but extradition formalities took two years to&nbsp;accomplish, the&nbsp;ministry said in&nbsp;a statement.</p>
- 
+
 <p>The&nbsp;group was stashing away bags of&nbsp;cocaine on&nbsp;transatlantic ships ferrying bananas from&nbsp;Ecuador to&nbsp;St. Petersburg, police said.</p>
- 
+
 <p>Upon arrival, drug couriers disguised as longshoremen picked up the&nbsp;cocaine, leaving ship crews unaware of&nbsp;the extra cargo.</p>
- 
+
 <p>About 70 kilograms of&nbsp;cocaine worth $85 million was seized during the&nbsp;crackdown on&nbsp;the operation in&nbsp;2010, implying far bigger long-term profits for&nbsp;the group.</p>
- 
+
 <p>The&nbsp;ministry did not specify criminal charges against Krasavchikov, but drug trafficking is punishable with up to&nbsp;20 years behind bars in&nbsp;Russia.</p>
- 
+
 <p>Nine alleged accomplices of&nbsp;Krasavchikov were already slapped with prison terms in&nbsp;Russia.</p>
          </div>
     </article>
@@ -553,82 +551,82 @@ function closePopup () {
 	<div class=bottom_links>
 		<div class=cols1>
 			<div class=title>Services</div>
-	
+
 			<!--/*
-				<a href="#" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('www.themoscowtimes.com');return false;">Сделать стартовой</a></p>
+				<a href="#" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('www.themoscowtimes.com');return false;">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</a></p>
 			*/-->
-	
+
 			<p>
-				<a href="/">Main</a>&nbsp;&#149; 
-				<a href="/news/index.php">News</a>&nbsp;&#149; 
-				<a href="/business/index.php">Business</a>&nbsp;&#149; 
-				<a href="/opinion/index.php">Opinion</a>&nbsp;&#149; 
-				<!--<a href="/sports/index.php">Sports</a&nbsp;&#149; --> 
-				<a href="/arts_n_ideas/index.html">Arts &amp; Ideas</a>&nbsp;&#149; 
-				<a href="/calendar/index.php">Calendar</a>&nbsp;&#149; 
-				<a href="/columns/index.php">Blogs</a>&nbsp;&#149; 
+				<a href="/">Main</a>&nbsp;&#149;
+				<a href="/news/index.php">News</a>&nbsp;&#149;
+				<a href="/business/index.php">Business</a>&nbsp;&#149;
+				<a href="/opinion/index.php">Opinion</a>&nbsp;&#149;
+				<!--<a href="/sports/index.php">Sports</a&nbsp;&#149; -->
+				<a href="/arts_n_ideas/index.html">Arts &amp; Ideas</a>&nbsp;&#149;
+				<a href="/calendar/index.php">Calendar</a>&nbsp;&#149;
+				<a href="/columns/index.php">Blogs</a>&nbsp;&#149;
 				<a href="/multimedia/index.php">Multimedia</a>
 			</p>
 			<p>
-				<a href="/business/business_for_business/index.php">B for B</a>&nbsp;&#149; 
+				<a href="/business/business_for_business/index.php">B for B</a>&nbsp;&#149;
 				<a href="/business/appointments/index.php">Appointments</a>
 			</p>
-		
+
 			<p>
-				<a href="/subscriptions/index.php">Subscriptions</a>&nbsp;&#149; 
-				<a href="/reprints/index.php"><nobr>Reprints</nobr></a>&nbsp;&#149; 
+				<a href="/subscriptions/index.php">Subscriptions</a>&nbsp;&#149;
+				<a href="/reprints/index.php"><nobr>Reprints</nobr></a>&nbsp;&#149;
 				<a href="/advertise/index.php"><nobr>Advertising</nobr></a>
 			</p>
 			<!---->
 		</div>
-	
+
 		<div class=cols2>
 			<div class=title>TOOLS & FORMATS</div>
 			<p>
-				<a href="/rss/index.php">RSS Feeds</a>&nbsp;&#149; 
-				<a href="/mobile/index.php">Mobile version</a>&nbsp;&#149; 
-				<a href="/pdf/index.php">PDF edition</a>&nbsp;&#149; 
-				<a href="/sitemap/index.php">Archive search</a>&nbsp;&#149; 
-				<a href="/rss/toolbars/index.php#safari">Safari Extension</a>&nbsp;&#149; 
+				<a href="/rss/index.php">RSS Feeds</a>&nbsp;&#149;
+				<a href="/mobile/index.php">Mobile version</a>&nbsp;&#149;
+				<a href="/pdf/index.php">PDF edition</a>&nbsp;&#149;
+				<a href="/sitemap/index.php">Archive search</a>&nbsp;&#149;
+				<a href="/rss/toolbars/index.php#safari">Safari Extension</a>&nbsp;&#149;
 				<a href="/rss/toolbars/index.php#firefox">Firefox Toolbar</a>
 			</p>
-		
+
 			<div class=title>PROJECTS</div>
 			<p>
-				<a href="/sotvori_sebya/index.php">Create Yourself</a>&nbsp;&#149; 
-				<a href="/student-project/index.php">Student Project</a>&nbsp;&#149; 
-				<a href="/lost_in_translation/index.php">Lost in Translation</a>&nbsp;&#149; 
+				<a href="/sotvori_sebya/index.php">Create Yourself</a>&nbsp;&#149;
+				<a href="/student-project/index.php">Student Project</a>&nbsp;&#149;
+				<a href="/lost_in_translation/index.php">Lost in Translation</a>&nbsp;&#149;
 				<a href="/books/index.php">Our Books</a>
 			</p>
-	
+
 		</div>
-	
-	
+
+
 		<div class=cols3>
 			<div class=title>CONFERENCES</div>
 			<p>
-				<a href="/conferences/index.php">Events</a>&nbsp;&#149; 
+				<a href="/conferences/index.php">Events</a>&nbsp;&#149;
 				<a href="/business/business_for_business/index.php">Business Special</a>
 			</p>
-		
+
 			<div class=title>REAL ESTATE</div>
 			<p>
-				<a href="/realestate/index.php">Home</a>&nbsp;&#149; 
-				<a href="/realestate/residential/index.php">Residential</a>&nbsp;&#149; 
-				<a href="/realestate/commercial/index.php">Commercial</a>&nbsp;&#149; 
+				<a href="/realestate/index.php">Home</a>&nbsp;&#149;
+				<a href="/realestate/residential/index.php">Residential</a>&nbsp;&#149;
+				<a href="/realestate/commercial/index.php">Commercial</a>&nbsp;&#149;
 				<a href="/realestate/beyond_moscow/index.php">Beyond Moscow</a>
 				<!--/*&nbsp;&#149; <a href="">Market Data</a*/-->
 			</p>
-		
+
 			<div class=title>CAREER CENTER</div>
 			<p>
-				<a href="/careercenter/index.php">Home</a>&nbsp;&#149; 
-				<a href="/careercenter/employees/index.php">Employees</a>&nbsp;&#149; 
+				<a href="/careercenter/index.php">Home</a>&nbsp;&#149;
+				<a href="/careercenter/employees/index.php">Employees</a>&nbsp;&#149;
 				<a href="/careercenter/employers/index.php">Employers</a>
 			</p>
-	
+
 		</div>
-	
+
 		<div class=cols4>
 			<!--/*
 				<div class=title>MOSCOW GUIDE</div>
@@ -636,22 +634,22 @@ function closePopup () {
 			*/-->
 			<div class=title>GUIDES</div>
 			<p>
-				<a href="/guides/index.php">Home</a>&nbsp;&#149; 
-				<a href="/guides/russia_for/index.php">Russia for...</a>&nbsp;&#149; 
+				<a href="/guides/index.php">Home</a>&nbsp;&#149;
+				<a href="/guides/russia_for/index.php">Russia for...</a>&nbsp;&#149;
 				<a href="/guides/country_supplements/index.php">Country Supplements</a>
 			</p>
-		
+
 			<div class=title>DIRECTORY</div>
 			<p>
-				<a href="/directory/miniguide/index.php">Mini Guide</a>&nbsp;&#149; 
-				<a href="/directory/realestate/index.php">Real Estate</a>&nbsp;&#149; 
+				<a href="/directory/miniguide/index.php">Mini Guide</a>&nbsp;&#149;
+				<a href="/directory/realestate/index.php">Real Estate</a>&nbsp;&#149;
 				<a href="/directory/classifieds/index.php">Classifieds</a>
 			</p>
-	
+
 		</div>
-		
+
 		<div class=clear>&nbsp;</div>
-	
+
 	</div>
 
 	<div class="copyright">
@@ -667,14 +665,14 @@ function closePopup () {
 					</div>
 		<p><img src="/bitrix/templates/tmt/img/logo_s.gif" width="190" height="19" alt="The Moscow Times"><br>
 		<div class=links>
-			<a href="/contact_us/index.php" style="text-decoration: underline;"><nobr>Contact Us</nobr></a>&nbsp;&#149; 
-			<a href="/agreement/index.php" style="text-decoration: underline;"><nobr>Licensing Agreement</nobr></a>&nbsp;&#149; 
+			<a href="/contact_us/index.php" style="text-decoration: underline;"><nobr>Contact Us</nobr></a>&nbsp;&#149;
+			<a href="/agreement/index.php" style="text-decoration: underline;"><nobr>Licensing Agreement</nobr></a>&nbsp;&#149;
 						<a href="/sitemap/index.php" style="text-decoration: underline;">SiteMap</a>
 			<!--/*a href="/subscriptions/">Subscribe</a> <a href="/advertise/">Advertise</a*/-->
 		</div>
 		&copy; Copyright 1992-2014. The Moscow Times. All rights reserved.</p>
-		                    
-                <p>Электронное периодическое издание «The Moscow Times» зарегистрировано в Федеральной службе по надзору за соблюдением законодательства в сфере массовых коммуникаций и охране культурного наследия 04 июля 2006 г. Свидетельство о регистрации Эл № ФС77–24949. 16+</p>
+
+                <p>пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅThe Moscow TimesпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 04 пїЅпїЅпїЅпїЅ 2006 пїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅ77пїЅ24949. 16+</p>
 
 
 	</div>
@@ -688,7 +686,7 @@ function closePopup () {
 
 
 
- 
+
 
 <!--BEGIN FlyScreen themoscowtimes.com (FlyScreen) / 15.12.2011-->
 <script language="JavaScript">
@@ -732,7 +730,7 @@ document.write('<scr' + 'ipt language="JavaScript" src="http://drive.videoclick.
 <!--END VideoInteractive -->
 
 
-		
-	
+
+
 
 </body></html>

@@ -21,10 +21,6 @@ RUN pip3 install -r /deployment/requirements.txt
 COPY deployment/test/requirements.txt /deployment/test/requirements.txt
 RUN pip3 install -r /deployment/test/requirements.txt
 
-# Install newspaper ubuntu requirements
-RUN apt-get install -y libxml2-dev libxslt-dev
-RUN curl https://raw.githubusercontent.com/codelucas/newspaper/master/download_corpora.py | python3
-
 # Install tests
 COPY app /frame/app
 COPY tests /frame/tests
