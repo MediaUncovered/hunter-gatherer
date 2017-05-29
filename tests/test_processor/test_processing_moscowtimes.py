@@ -22,7 +22,7 @@ class TestProcessingMoscowTimes(unittest.TestCase):
         ]
         body_queries = [
             Query(
-                query="//div[@class='article_text']//p/text()"
+                query="//div[@class='article_text']//p//text()"
             )
         ]
         subject = Processor(title_queries=title_queries,

@@ -1,5 +1,7 @@
 import unicodedata
+import re
 import lxml.html as html
+import chardet
 
 
 class Processor(object):
@@ -12,8 +14,14 @@ class Processor(object):
         self.month_queries = month_queries
         self.date_queries = date_queries
 
-    def process(self, url, html_binary, encoding="utf-8"):
-        html_string = html_binary.decode(encoding).encode("utf-8")
+    def process(self, url, html_binary, encoding=None):
+        if encoding is None:
+            encoding = chardet.detect(html_binary)['encoding']
+        if encoding == "utf-8":
+            html_string = html_binary.decode("utf-8")
+        else:
+            html_string = html_binary.decode(encoding).encode("utf-8")
+
         tree = html.fromstring(html_string)
 
         title = self.process_queries(url, tree, self.title_queries)
@@ -36,6 +44,7 @@ class Processor(object):
                 result += encoded
 
         normalized = unicodedata.normalize("NFKD", result.decode("utf-8"))
+        normalized = re.sub(' +', ' ', normalized)
         return normalized
 
 
