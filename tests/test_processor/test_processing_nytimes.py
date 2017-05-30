@@ -22,7 +22,7 @@ class TestProcessingNyTimes(unittest.TestCase):
         ]
         body_queries = [
             Query(
-                query="//article//div[contains(concat(' ', @class, ' '), ' story-body ')]//p//text()"
+                query="//article//p[@class='story-body-text story-content']//text()"
             )
         ]
         subject = Processor(title_queries=title_queries,
