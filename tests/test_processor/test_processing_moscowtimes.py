@@ -25,8 +25,16 @@ class TestProcessingMoscowTimes(unittest.TestCase):
                 query="//div[@class='article_text']//p//text()"
             )
         ]
+        date_queries = [
+            Query(
+                query="//ul[@class='sochi_article_info sochi_article']/li[2]/text()"
+            )
+        ]
+        date_format = "%b. %d %Y %H:%M "
         subject = Processor(title_queries=title_queries,
-                            body_queries=body_queries)
+                            body_queries=body_queries,
+                            date_queries=date_queries,
+                            date_format=date_format)
 
         # Given an article page of the Moscow Times
         source_url = "http://old.themoscowtimes.com/sitemap/free/2014/1/article/netherlands-extradites-russian-accused-of-overseeing-shipments-of-cocaine-stashed-in-bananas/492579.html"
@@ -45,7 +53,7 @@ class TestProcessingMoscowTimes(unittest.TestCase):
     def test_date(self):
         # Then it extracts the publication date
         expected_datetime = datetime.datetime(2014, 1, 14)
-        self.assertEquals(expected_datetime, self.result.datetime)
+        self.assertEquals(expected_datetime, self.result.date)
 
     def test_body(self):
         # Then it extracts content

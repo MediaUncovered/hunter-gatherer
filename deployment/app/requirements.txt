@@ -2,3 +2,4 @@ selenium==3.4.2
 lxml==3.7.3
 cov-core==1.15.0
 chardet==3.0.3
+python-dateutil==2.6.0

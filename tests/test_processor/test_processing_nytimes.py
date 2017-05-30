@@ -4,6 +4,7 @@ Tests for analyzing and labeling a Moscow Times article
 import unittest
 import os
 import datetime
+from dateutil.tz import tzoffset
 from app.config import Query
 from app.processor import Processor
 
@@ -25,8 +26,16 @@ class TestProcessingNyTimes(unittest.TestCase):
                 query="//article//p[@class='story-body-text story-content']//text()"
             )
         ]
+        date_queries = [
+            Query(
+                query="//time[@class='dateline']/@datetime"
+            )
+        ]
+        date_format=None
         subject = Processor(title_queries=title_queries,
-                            body_queries=body_queries)
+                            body_queries=body_queries,
+                            date_queries=date_queries,
+                            date_format=date_format)
 
         # Given an article page of the NY Times
         source_url = "https://www.nytimes.com/reuters/2017/05/22/us/politics/22reuters-usa-budget.html"
@@ -44,8 +53,8 @@ class TestProcessingNyTimes(unittest.TestCase):
 
     def test_date(self):
         # Then it extracts the publication date
-        expected_datetime = datetime.datetime(2017, 5, 22)
-        self.assertEquals(expected_datetime, self.result.datetime)
+        expected_datetime = datetime.datetime(2017, 5, 22, 13, 15, 31, tzinfo=tzoffset(None, -14400))
+        self.assertEquals(expected_datetime, self.result.date)
 
     def test_body(self):
         # Then it extracts content
