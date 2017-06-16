@@ -66,7 +66,7 @@ class Crawler(object):
     def crawl(self, url):
         html = self.fetcher.fetch(url, self.wait_query)
         if self.download:
-            self.archiver.archive(html)
+            self.archiver.archive(url, html)
 
         orders = self.extract(url, html, self.queries)
         for order in orders:
