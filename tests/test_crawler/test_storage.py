@@ -2,7 +2,7 @@
 Tests if the crawler stores data
 '''
 import unittest
-import unittest.mock as mock
+import unittest.mock
 import os
 from app.crawler import Crawler
 from app.storage import Archiver
@@ -34,10 +34,10 @@ class TestCrawlerStorage(unittest.TestCase):
         test_data_path = os.path.join(test_dir_path, 'data/ny_archive_sample.html')
         with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
-        # And a Crawler configured to download its target
-        # But not to collect any link
-        self.archiver = unittest.mock.create_autospec(Archiver)
+        # And a Crawler is configured to not collect any link
         queries = []
+        # And to download its target
+        self.archiver = unittest.mock.create_autospec(Archiver)
         self.crawler = Crawler(
             queries,
             fetcher=MockFetcher(self.html_data),
