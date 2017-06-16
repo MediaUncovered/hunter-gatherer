@@ -5,7 +5,7 @@ import unittest
 import unittest.mock as mock
 import os
 from app.crawler import Crawler
-from app.database import Archiver
+from app.storage import Archiver
 
 test_dir_path = os.path.dirname(__file__)
 

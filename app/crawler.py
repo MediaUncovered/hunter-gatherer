@@ -5,7 +5,7 @@ optionally store the documents it has visited.
 from selenium import webdriver
 from .queue import Order, Queuer
 from lxml import etree
-from .database import Archiver
+from .storage import Archiver
 import urllib.parse as urlparse
 
 
