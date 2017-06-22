@@ -8,3 +8,12 @@ services:
     image: todorus/news_analysis-hunter_gatherer:production
     volumes:
       - ../app:/app
+    depends_on:
+      - queue
+
+  queue:
+    image: redis
+    volumes:
+      - ../data:/data
+    ports:
+      - 6379:6379

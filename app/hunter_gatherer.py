@@ -1,41 +1,6 @@
-from .config import CrawlerDef, Query
-from .crawler import Crawler
+from jobs.queue import Queuer
 
-crawlers = {
-    "ARTICLE": CrawlerDef(
-        label="ARTICLE",
-        crawler=Crawler,
-        queries=[],
-        download=True
-    ),
-    "NY_ARCHIVE": CrawlerDef(
-        label="NY_ARCHIVE",
-        crawler=Crawler,
-        queries=[
-            Query(
-                query="//li[@class='story noThumb']//a/@href",
-                crawler="ARTICLE"
-            )
-        ],
-        download=False,
-        wait_query="//li[@class='story noThumb']//a/@href"
-    ),
-    "DAILY_YEARS": CrawlerDef(
-        label="DAILY_YEARS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-    "DAILY_MONTHS": CrawlerDef(
-        label="DAILY_MONTHS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-    "DAILY_DAYS": CrawlerDef(
-        label="DAILY_DAYS",
-        crawler=Crawler,
-        queries=[],
-        download=False
-    ),
-}
+queuer = Queuer()
+for x in range(0, 2000):
+    print("%d" % x)
+    queuer.queue(None)

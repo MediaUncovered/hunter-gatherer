@@ -24,4 +24,4 @@ COPY    app   /app
 
 # Start crawler
 WORKDIR /app
-CMD python hunter_gatherer.py
+CMD python3 hunter_gatherer.py

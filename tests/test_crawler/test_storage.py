@@ -4,8 +4,8 @@ Tests if the crawler stores data
 import unittest
 import unittest.mock
 import os
-from app.crawler import Crawler
-from app.storage import Archiver
+from crawler.crawler import Crawler
+from crawler.storage import Archiver
 
 test_dir_path = os.path.dirname(__file__)
 
