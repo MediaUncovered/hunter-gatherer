@@ -1,7 +1,14 @@
 version: '2'
 services:
 
-  app:
+  queue:
+    image: redis
+    volumes:
+      - ../data:/data
+    ports:
+      - 6379:6379
+
+  worker:
     build:
       context: ..
       dockerfile: deployment/app/Dockerfile
@@ -10,10 +17,4 @@ services:
       - ../app:/app
     depends_on:
       - queue
-
-  queue:
-    image: redis
-    volumes:
-      - ../data:/data
-    ports:
-      - 6379:6379
+    command: python3 seed.py

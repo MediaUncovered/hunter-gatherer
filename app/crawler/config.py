@@ -13,10 +13,11 @@ class Query(object):
 
 class CrawlerDef(object):
 
-    def __init__(self, label=None, crawler=None, queries=[], download=False,
-                 wait_query=None):
+    def __init__(self, label=None, crawler=None, queries=[], archive=False,
+                 wait_query=None, version=1):
         self.label = label
         self.crawler = crawler
         self.queries = queries
-        self.download = download
+        self.archive = archive
         self.wait_query = wait_query
+        self.version = version

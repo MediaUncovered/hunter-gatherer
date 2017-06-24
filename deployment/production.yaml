@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  queue:
+    image: redis
+    volumes:
+      - ../data:/data
+    ports:
+      - 6379:6379
+
+  worker:
+    build:
+      context: ..
+      dockerfile: deployment/app/Dockerfile
+    image: todorus/news_analysis-hunter_gatherer:production
+    volumes:
+      - ../app:/app
+    depends_on:
+      - queue
+    command: celery worker -A jobs.tasks --loglevel=info --concurrency=4 -Ofair

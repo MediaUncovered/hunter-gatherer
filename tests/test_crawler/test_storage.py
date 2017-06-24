@@ -23,8 +23,8 @@ class MockQueuer():
     def __init__(self):
         self.orders = []
 
-    def que(self, order):
-        self.orders.append(order)
+    def que(self, crawler_label, url):
+        self.orders.append((crawler_label, url))
 
 
 class TestCrawlerStorage(unittest.TestCase):
@@ -43,7 +43,7 @@ class TestCrawlerStorage(unittest.TestCase):
             fetcher=MockFetcher(self.html_data),
             queuer=MockQueuer(),
             archiver=self.archiver,
-            download=True
+            archive=True
         )
 
     def test_storage(self):
