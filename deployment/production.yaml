@@ -12,9 +12,18 @@ services:
     build:
       context: ..
       dockerfile: deployment/app/Dockerfile
-    image: todorus/news_analysis-hunter_gatherer:production
-    volumes:
-      - ../app:/app
+    image: todorus/news_analysis-hunter_gatherer:worker
     depends_on:
       - queue
     command: celery worker -A jobs.tasks --loglevel=info --concurrency=4 -Ofair
+
+  monitor:
+    build:
+      context: ..
+      dockerfile: deployment/monitor/Dockerfile
+    image: todorus/news_analysis-hunter_gatherer:monitor
+    ports:
+     - "5555:5555"
+    depends_on:
+      - queue
+    command: flower -A jobs.tasks --port=5555 --broker=redis://queue:6379/0
