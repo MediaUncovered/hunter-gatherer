@@ -14,7 +14,7 @@ class Query(object):
 class CrawlerDef(object):
 
     def __init__(self, label=None, crawler=None, queries=[], archive=False,
-                 wait_query=None, version=1, javascript=False):
+                 wait_query=None, version=1, javascript=False, priority=0):
         self.label = label
         self.crawler = crawler
         self.queries = queries
@@ -22,3 +22,4 @@ class CrawlerDef(object):
         self.wait_query = wait_query
         self.version = version
         self.javascript = javascript
+        self.priority = priority

@@ -6,13 +6,15 @@ crawlers = {
         label="ARTICLE",
         crawler=Crawler,
         queries=[],
-        archive=True
+        archive=True,
+        priority=9
     ),
     "ARTICLE_HTML": CrawlerDef(
         label="ARTICLE",
         crawler=Crawler,
         queries=[],
-        archive=True
+        archive=True,
+        priority=9
     ),
     "NY_ARCHIVE": CrawlerDef(
         label="NY_ARCHIVE",
@@ -58,6 +60,7 @@ crawlers = {
                 crawler="ARTICLE_HTML"
             )
         ],
-        archive=False
+        archive=False,
+        priority=1
     ),
 }

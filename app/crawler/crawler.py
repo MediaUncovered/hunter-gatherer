@@ -33,7 +33,8 @@ class Crawler(object):
                  queuer=None,
                  version=1,
                  archive=False,
-                 wait_query=None):
+                 wait_query=None,
+                 priority=0):
         self.queries = queries
         self.version = version
         self.archive = archive
@@ -41,6 +42,7 @@ class Crawler(object):
         self.fetcher = fetcher
         self.archiver = archiver
         self.queuer = queuer
+        self.priority = priority
 
     def crawl(self, url):
         print("fetching %s" % url)
@@ -53,7 +55,7 @@ class Crawler(object):
             print("extracting queries")
             orders = self.extract(url, html, self.queries)
             for order in orders:
-                self.queuer.que(*order)
+                self.queuer.que(*order, priority=self.priority)
 
     def extract(self, original_url, html, queries):
         tree = etree.HTML(html)
