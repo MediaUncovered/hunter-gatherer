@@ -14,6 +14,8 @@ To run the crawler, first the initial jobs must be placed in the queue. This can
 
 After the queue is seeded the ```run.sh``` script can be run.
 
+The crawler can be monitored by visiting ```localhost:5555```.
+
 Development
 -----------
 You can run the develop script to get you started. The script will build a Docker container and run it.
