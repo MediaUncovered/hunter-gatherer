@@ -2,7 +2,13 @@ from crawler.config import CrawlerDef, Query
 from crawler.crawler import Crawler
 
 crawlers = {
-    "ARTICLE": CrawlerDef(
+    "ARTICLE_JS": CrawlerDef(
+        label="ARTICLE",
+        crawler=Crawler,
+        queries=[],
+        archive=True
+    ),
+    "ARTICLE_HTML": CrawlerDef(
         label="ARTICLE",
         crawler=Crawler,
         queries=[],
@@ -14,11 +20,12 @@ crawlers = {
         queries=[
             Query(
                 query="//li[@class='story noThumb']//a/@href",
-                crawler="ARTICLE"
+                crawler="ARTICLE_JS"
             )
         ],
         archive=False,
-        wait_query="//li[@class='story noThumb']//a/@href"
+        wait_query="//li[@class='story noThumb']//a/@href",
+        javascript=True
     ),
     "MOSCOW_ALL": CrawlerDef(
         label="MOSCOW_ALL",
@@ -48,7 +55,7 @@ crawlers = {
         queries=[
             Query(
                 query="//div[@class='content']/div[@class='left']//a/@href",
-                crawler="ARTICLE"
+                crawler="ARTICLE_HTML"
             )
         ],
         archive=False

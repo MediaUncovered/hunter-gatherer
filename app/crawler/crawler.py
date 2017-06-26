@@ -2,30 +2,10 @@
 Crawls an XML/HTML document. It can extract urls for further crawling and
 optionally store the documents it has visited.
 '''
-from selenium import webdriver
 from lxml import etree
 from crawler.storage import Archiver
+from crawler.fetcher import PhantomFetcher
 import urllib.parse as urlparse
-
-
-class Fetcher(object):
-
-    def __init__(self, driver):
-        self.driver = driver
-
-    def fetch(self, url, wait_query):
-        self.driver.get(url)
-        if wait_query is not None:
-            self.driver.find_element_by_xpath(wait_query)
-        return self.driver.page_source
-
-
-class PhantomFetcher(Fetcher):
-
-    def __init__(self):
-        driver = webdriver.PhantomJS()
-        driver.implicitly_wait(10)
-        super(PhantomFetcher, self).__init__(driver)
 
 
 class Crawler(object):
