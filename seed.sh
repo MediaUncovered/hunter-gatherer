@@ -3,6 +3,8 @@ LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # make sure we use the latest build
 docker-compose -f $LOCAL_DIR/deployment/seed.yaml build
+# docker-compose -f $LOCAL_DIR/deployment/seed.yaml down
+# docker-compose -f $LOCAL_DIR/deployment/production.yaml scale worker=1
 
 # run the development container
-docker-compose -f $LOCAL_DIR/deployment/seed.yaml up --abort-on-container-exit --force-recreate
+docker-compose -f $LOCAL_DIR/deployment/seed.yaml up --abort-on-container-exit
