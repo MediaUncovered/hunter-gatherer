@@ -12,11 +12,19 @@ services:
     ports:
       - 5672
 
-  worker:
+  result:
+    image: redis
+    volumes:
+      - ../data/redis:/data
+    ports:
+      - 6379
+
+  seeder:
     build:
       context: ..
       dockerfile: deployment/app/Dockerfile
     image: todorus/news_analysis-hunter_gatherer:production
     depends_on:
       - queue
+      - result
     command: python3 seed.py
