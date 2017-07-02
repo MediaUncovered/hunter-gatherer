@@ -3,9 +3,8 @@ Tests for the Archive crawler
 '''
 import unittest
 import os
-from app.config import Query
-from app.crawler import Crawler
-from app.queue import Order
+from crawler.config import Query
+from crawler.crawler import Crawler
 
 test_dir_path = os.path.dirname(__file__)
 
@@ -23,8 +22,8 @@ class MockQueuer():
     def __init__(self):
         self.orders = []
 
-    def que(self, order):
-        self.orders.append(order)
+    def que(self, crawler_label, url, priority=0):
+        self.orders.append((crawler_label, url))
 
 
 class TestArchiveCrawling(unittest.TestCase):
@@ -55,19 +54,18 @@ class TestArchiveCrawling(unittest.TestCase):
 
         # Then it will have queued the Orders
         expected = [
-            Order("https://www.nytimes.com/1981/01/01/nyregion/notes-on-people-207391.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/obituaries/marshall-mcluhan-author-dies-declared-medium-is-the-message.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/business/thursday-january-1-1981-the-economy.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/arts/wncn-fm-is-put-up-for-sale-by-gaf.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/nyregion/new-year-s-day.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/us/around-the-nation-irs-seeking-16.6-million-in-back-taxes-from-welch.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/us/no-headline-207370.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/nyregion/7koch-box-a-caution-from-koch-on-investing-in-camels.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/world/chomsky-stirs-french-storm-in-a-demitasse.html", "ARTICLE"),
-            Order("https://www.nytimes.com/1981/01/01/nyregion/45-year-terms-given-2-in-bank-robberies.html", "ARTICLE")
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/nyregion/notes-on-people-207391.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/obituaries/marshall-mcluhan-author-dies-declared-medium-is-the-message.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/business/thursday-january-1-1981-the-economy.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/arts/wncn-fm-is-put-up-for-sale-by-gaf.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/nyregion/new-year-s-day.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/us/around-the-nation-irs-seeking-16.6-million-in-back-taxes-from-welch.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/us/no-headline-207370.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/nyregion/7koch-box-a-caution-from-koch-on-investing-in-camels.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/world/chomsky-stirs-french-storm-in-a-demitasse.html"),
+            ("ARTICLE", "https://www.nytimes.com/1981/01/01/nyregion/45-year-terms-given-2-in-bank-robberies.html")
         ]
         self.assertEquals(len(expected), len(crawler.queuer.orders))
         for index, expected_order in enumerate(expected):
             result_order = crawler.queuer.orders[index]
-            self.assertEquals(expected_order.url, result_order.url)
-            self.assertEquals(expected_order.crawler_label, result_order.crawler_label)
+            self.assertEquals(expected_order, result_order)

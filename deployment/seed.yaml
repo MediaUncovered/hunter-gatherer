@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+  queue:
+    hostname: queue
+    image: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    volumes:
+      - ../data/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 5672
+
+  result:
+    image: redis
+    volumes:
+      - ../data/redis:/data
+    ports:
+      - 6379
+
+  seeder:
+    build:
+      context: ..
+      dockerfile: deployment/app/Dockerfile
+    image: todorus/news_analysis-hunter_gatherer:production
+    depends_on:
+      - queue
+      - result
+    command: python3 seed.py

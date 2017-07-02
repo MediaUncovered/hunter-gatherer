@@ -16,12 +16,14 @@ RUN npm install -g phantomjs
 ENV PATH="/usr/bin/phantomjs:${PATH}"
 
 # Install Python requirements
-COPY deployment/app/requirements.txt /deployment/requirements.txt
-RUN pip3 install -r /deployment/requirements.txt
+COPY deployment/app/requirements.txt /deployment/app_requirements.txt
+RUN pip3 install -r /deployment/app_requirements.txt
+COPY deployment/monitor/requirements.txt /deployment/monitor_requirements.txt
+RUN pip3 install -r /deployment/monitor_requirements.txt
 
 # Copy app code
 COPY    app   /app
 
 # Start crawler
 WORKDIR /app
-CMD python3 hunter_gatherer.py
+CMD flower -A jobs.tasks --port=5555 --broker=redis://queue:6379/0

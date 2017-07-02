@@ -4,8 +4,8 @@ Tests if the crawler stores data
 import unittest
 import unittest.mock
 import os
-from app.crawler import Crawler
-from app.storage import Archiver
+from crawler.crawler import Crawler
+from crawler.storage import Archiver
 
 test_dir_path = os.path.dirname(__file__)
 
@@ -23,8 +23,8 @@ class MockQueuer():
     def __init__(self):
         self.orders = []
 
-    def que(self, order):
-        self.orders.append(order)
+    def que(self, crawler_label, url, priority=0):
+        self.orders.append((crawler_label, url))
 
 
 class TestCrawlerStorage(unittest.TestCase):
@@ -43,7 +43,7 @@ class TestCrawlerStorage(unittest.TestCase):
             fetcher=MockFetcher(self.html_data),
             queuer=MockQueuer(),
             archiver=self.archiver,
-            download=True
+            archive=True
         )
 
     def test_storage(self):

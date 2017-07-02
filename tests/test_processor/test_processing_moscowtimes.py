@@ -4,8 +4,8 @@ Tests for analyzing and labeling a Moscow Times article
 import unittest
 import os
 import datetime
-from app.config import Query
-from app.processor import Processor
+from crawler.config import Query
+from crawler.processor import Processor
 
 test_dir_path = os.path.dirname(__file__)
 

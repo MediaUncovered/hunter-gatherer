@@ -1,0 +1,45 @@
+version: '2'
+services:
+
+  queue:
+    hostname: queue
+    image: rabbitmq:3.6.10-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+      - log_levels=warning
+    volumes:
+      - ../data/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 5672
+      - 15672
+      - 8080
+
+  result:
+    image: redis
+    volumes:
+      - ../data/redis:/data
+    ports:
+      - 6379
+
+  worker:
+    build:
+      context: ..
+      dockerfile: deployment/app/Dockerfile
+    image: todorus/news_analysis-hunter_gatherer:worker
+    depends_on:
+      - queue
+      - result
+    command: celery worker -A jobs.tasks --loglevel=warning --prefetch-multiplier=64 --task-events
+
+  monitor:
+    build:
+      context: ..
+      dockerfile: deployment/monitor/Dockerfile
+    image: todorus/news_analysis-hunter_gatherer:monitor
+    ports:
+     - "5555:5555"
+    depends_on:
+      - queue
+      - result
+    command: bash -c "sleep 10s; flower -A jobs.tasks --port=5555 --broker=amqp://admin:mypass@queue:5672//;"
