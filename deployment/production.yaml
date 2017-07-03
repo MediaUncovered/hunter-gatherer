@@ -22,6 +22,15 @@ services:
     ports:
       - 6379
 
+  storage:
+    image: postgres:9.6.3
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - ../data/storage:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   worker:
     build:
       context: ..
