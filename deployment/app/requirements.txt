@@ -6,3 +6,6 @@ chardet==3.0.3
 python-dateutil==2.6.0
 celery==4.0.2
 redis==2.10.5
+sqlalchemy==1.1.11
+psycopg2==2.7.1
+sqlalchemy-utils==0.32.14
