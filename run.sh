@@ -5,4 +5,4 @@ LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 docker-compose -f $LOCAL_DIR/deployment/production.yaml build
 
 # run the development container
-docker-compose -f $LOCAL_DIR/deployment/production.yaml up --force-recreate --scale worker=1
+docker-compose -f $LOCAL_DIR/deployment/production.yaml up --force-recreate --scale worker=2
