@@ -28,7 +28,7 @@ services:
     volumes:
       - ../data/storage:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - 5432
 
   seeder:
     build:
@@ -42,7 +42,9 @@ services:
     depends_on:
       - queue
       - result
+      - storage
     links:
       - queue:queue
       - storage:storage
+      - result:result
     command: python3 seed.py

@@ -25,20 +25,31 @@ services:
   storage:
     image: postgres:9.6.3
     environment:
+      - POSTGRES_USER=mysecretuser
+      - POSTGRES_DB=media_uncovered
       - POSTGRES_PASSWORD=mysecretpassword
     volumes:
       - ../data/storage:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   worker:
     build:
       context: ..
       dockerfile: deployment/app/Dockerfile
     image: todorus/news_analysis-hunter_gatherer:worker
+    environment:
+      - DATABASE_NAME=media_uncovered
+      - DATABASE_USER=mysecretuser
+      - DATABASE_PASSWORD=mysecretpassword
     depends_on:
       - queue
       - result
+      - storage
+    links:
+      - queue:queue
+      - storage:storage
+      - result:result
     command: celery worker -A jobs.tasks --loglevel=warning --prefetch-multiplier=64 --task-events
 
   monitor:

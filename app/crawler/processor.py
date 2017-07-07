@@ -16,12 +16,14 @@ class Processor(object):
         self.date_format = date_format
 
     def process(self, url, html_binary, encoding=None):
+        print("processing %s" % url)
         if encoding is None:
             encoding = chardet.detect(html_binary)['encoding']
         if encoding == "utf-8":
             html_string = html_binary.decode("utf-8")
         else:
             html_string = html_binary.decode(encoding).encode("utf-8")
+        print("using encoding %s for %s" % (encoding, url))
 
         tree = html.fromstring(html_string)
 
@@ -36,6 +38,7 @@ class Processor(object):
             else:
                 date = parse_date(date_string)
 
+        print("done processing %s" % url)
         return Document(title=title, body=body, date=date)
 
     def process_queries(self, url, tree, queries):

@@ -22,7 +22,7 @@ class MockQueuer():
     def __init__(self):
         self.orders = []
 
-    def que(self, crawler_label, url, priority=0):
+    def que(self, crawler_label, url, source_id, priority=0):
         self.orders.append((crawler_label, url))
 
 

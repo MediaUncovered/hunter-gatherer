@@ -49,9 +49,9 @@ class TestCrawlerStorage(unittest.TestCase):
     def test_storage(self):
         # When the crawler crawls the page
         test_url = "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/1/allauthors/oldest/"
-        self.crawler.crawl(test_url)
+        self.crawler.crawl(test_url, source_id=11)
 
         # Then it will call the Archiver to store the data
-        self.archiver.archive.assert_called_once_with(test_url, self.html_data)
+        self.archiver.archive.assert_called_once_with(test_url, self.html_data, source_id=11)
         # And not queue any other jobs
         self.assertEquals(0, len(self.crawler.queuer.orders))

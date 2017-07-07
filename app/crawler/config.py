@@ -14,11 +14,13 @@ class Query(object):
 class CrawlerDef(object):
 
     def __init__(self, label=None, crawler=None, queries=[], archive=False,
-                 wait_query=None, version=1, javascript=False, priority=0):
+                 process=False, wait_query=None, version=1, javascript=False,
+                 priority=0):
         self.label = label
         self.crawler = crawler
         self.queries = queries
         self.archive = archive
+        self.process = process
         self.wait_query = wait_query
         self.version = version
         self.javascript = javascript

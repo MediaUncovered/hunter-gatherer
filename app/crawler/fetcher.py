@@ -13,7 +13,7 @@ class RequestFetcher(Fetcher):
         response = requests.get(url)
         if wait_query is not None:
             raise Exception("wait_query is not supported by RequestFetcher")
-        return response.text
+        return response.content
 
 
 class PhantomFetcher(Fetcher):

@@ -2,12 +2,11 @@ import os
 import sys
 import time
 from sqlalchemy import UniqueConstraint, ForeignKey
-from sqlalchemy import Column, Integer, Unicode, Date
+from sqlalchemy import Column, Integer, Unicode, DateTime, LargeBinary
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy_utils.functions import database_exists
-from sqlalchemy import exc
 
 
 Base = declarative_base()
@@ -26,8 +25,9 @@ class Article(Base):
 
     id = Column(Integer, primary_key=True)
     url = Column(Unicode, unique=True, nullable=False)
+    html = Column(LargeBinary, nullable=False)
 
-    published = Column(Date)
+    published = Column(DateTime)
     title = Column(Unicode)
     body = Column(Unicode)
 
@@ -35,14 +35,15 @@ class Article(Base):
     source = relationship("Source")
 
 
-def seed():
+def init():
     eng = engine()
     Base.metadata.create_all(eng)
 
 
 def session():
     eng = engine()
-    return sessionmaker(eng)
+    Session = sessionmaker(eng)
+    return Session()
 
 
 def engine():

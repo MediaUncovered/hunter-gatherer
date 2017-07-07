@@ -44,26 +44,26 @@ class Crawler(object):
         self.queuer = queuer
         self.priority = priority
 
-    def crawl(self, url):
+    def crawl(self, url, source_id=None):
         print("fetching %s" % url)
         html = self.fetcher.fetch(url, self.wait_query)
         if self.archive:
             print("archiving %s" % url)
-            self.archiver.archive(url, html)
+            self.archiver.archive(url, html, source_id=source_id)
 
         if self.queries is not None and self.queuer is not None:
             print("extracting queries")
-            orders = self.extract(url, html, self.queries)
+            orders = self.extract(url, html, self.queries, source_id)
             for order in orders:
-                self.queuer.que(*order, priority=self.priority)
+                self.queuer.que(*order, source_id=source_id, priority=self.priority)
 
-    def extract(self, original_url, html, queries):
+    def extract(self, original_url, html, queries, source_id):
         tree = etree.HTML(html)
         orders = []
         for query in queries:
             urls = tree.xpath(query.query)
             for url in urls:
                 orders.append(
-                    (query.crawler, urlparse.urljoin(original_url, url))
+                    (query.crawler, urlparse.urljoin(original_url, url, source_id))
                 )
         return orders
