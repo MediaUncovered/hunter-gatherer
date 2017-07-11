@@ -55,7 +55,7 @@ def run_processor(label, url):
 
     article.title = document.title
     article.body = document.body
-    article.date = document.date
+    article.published = document.date
     session.commit()
 
 
