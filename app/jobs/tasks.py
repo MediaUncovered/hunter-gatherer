@@ -1,3 +1,4 @@
+import os
 from celery import Celery
 from crawler.crawler import Crawler
 from crawler.fetcher import RequestFetcher, PhantomFetcher
@@ -8,7 +9,9 @@ from kombu import Connection
 
 
 redis_url = 'redis://result:6379/0'
-rabbitmq_url = 'amqp://admin:mypass@queue:5672'
+rabbitmq_user = os.environ["QUEUE_USER"]
+rabbitmq_password = os.environ["QUEUE_PASSWORD"]
+rabbitmq_url = 'amqp://%s:%s@queue:5672' % (rabbitmq_user, rabbitmq_password)
 
 celery_broker_url = rabbitmq_url
 

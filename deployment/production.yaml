@@ -39,6 +39,8 @@ services:
       dockerfile: deployment/app/Dockerfile
     image: todorus/news_analysis-hunter_gatherer:worker
     environment:
+      - QUEUE_USER=admin
+      - QUEUE_PASSWORD=mypass
       - DATABASE_NAME=media_uncovered
       - DATABASE_USER=mysecretuser
       - DATABASE_PASSWORD=mysecretpassword
@@ -59,6 +61,12 @@ services:
     image: todorus/news_analysis-hunter_gatherer:monitor
     ports:
      - "5555:5555"
+    environment:
+     - QUEUE_USER=admin
+     - QUEUE_PASSWORD=mypass
+     - DATABASE_NAME=media_uncovered
+     - DATABASE_USER=mysecretuser
+     - DATABASE_PASSWORD=mysecretpassword
     depends_on:
       - queue
       - result

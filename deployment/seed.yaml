@@ -36,6 +36,8 @@ services:
       dockerfile: deployment/app/Dockerfile
     image: todorus/news_analysis-hunter_gatherer:production
     environment:
+      - QUEUE_USER=admin
+      - QUEUE_PASSWORD=mypass
       - DATABASE_NAME=media_uncovered
       - DATABASE_USER=mysecretuser
       - DATABASE_PASSWORD=mysecretpassword
