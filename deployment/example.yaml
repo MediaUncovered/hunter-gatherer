@@ -21,6 +21,8 @@ services:
       - DATABASE_NAME=media_uncovered
       - DATABASE_USER=mysecretuser
       - DATABASE_PASSWORD=mysecretpassword
+      - DATABASE_HOST=storage
+      - DATABASE_PORT=5432
     depends_on:
       - storage
     links:

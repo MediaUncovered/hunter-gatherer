@@ -7,11 +7,23 @@ import crawler.model as model
 import jobs.definitions
 from kombu import Connection
 
+redis_host = os.environ["RESULT_HOST"]
+redis_port = os.environ["RESULT_PORT"]  # 6379
+redis_url = 'redis://%s:%s/0' % (
+    redis_host,
+    redis_port,
+)
 
-redis_url = 'redis://result:6379/0'
 rabbitmq_user = os.environ["QUEUE_USER"]
 rabbitmq_password = os.environ["QUEUE_PASSWORD"]
-rabbitmq_url = 'amqp://%s:%s@queue:5672' % (rabbitmq_user, rabbitmq_password)
+rabbitmq_host = os.environ["QUEUE_HOST"]
+rabbitmq_port = os.environ["QUEUE_PORT"]  # 5672
+rabbitmq_url = 'amqp://%s:%s@%s:%s' % (
+    rabbitmq_user,
+    rabbitmq_password,
+    rabbitmq_host,
+    rabbitmq_port
+)
 
 celery_broker_url = rabbitmq_url
 

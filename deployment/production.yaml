@@ -41,9 +41,15 @@ services:
     environment:
       - QUEUE_USER=admin
       - QUEUE_PASSWORD=mypass
+      - QUEUE_HOST=queue
+      - QUEUE_PORT=5672
       - DATABASE_NAME=media_uncovered
       - DATABASE_USER=mysecretuser
       - DATABASE_PASSWORD=mysecretpassword
+      - DATABASE_HOST=storage
+      - DATABASE_PORT=5432
+      - RESULT_HOST=result
+      - RESULT_PORT=6379
     depends_on:
       - queue
       - result

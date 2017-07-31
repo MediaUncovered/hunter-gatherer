@@ -47,14 +47,18 @@ def session():
 
 
 def engine():
-    database_name = os.environ["DATABASE_NAME"]
     database_user = os.environ["DATABASE_USER"]
     database_password = os.environ["DATABASE_PASSWORD"]
+    database_host = os.environ["DATABASE_HOST"]
+    database_port = os.environ["DATABASE_PORT"]
+    database_name = os.environ["DATABASE_NAME"]
 
-    db_url = 'postgresql://%s:%s@storage:5432/%s' % (
+    db_url = 'postgresql://%s:%s@%s:%s/%s' % (
         database_user,
         database_password,
-        database_name
+        database_host,
+        database_port,
+        database_name,
     )
 
     max_tries = 10
