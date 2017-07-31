@@ -20,13 +20,13 @@ q = Queuer()
 #     u"http://old.themoscowtimes.com/sitemap/free/1992/12/2.html",
 #     moscow_times_source.id)
 
-q.que(
-    "MOSCOW_YEAR",
-    u"http://old.themoscowtimes.com/sitemap/free/1992.html",
-    moscow_times_source.id)
+# q.que(
+#     "MOSCOW_YEAR",
+#     u"http://old.themoscowtimes.com/sitemap/free/1992.html",
+#     moscow_times_source.id)
 
-# q.que("MOSCOW_ALL",
-#       u"http://old.themoscowtimes.com/sitemap/",
-#       moscow_times_source.id)
+q.que("MOSCOW_ALL",
+      u"http://old.themoscowtimes.com/sitemap/",
+      moscow_times_source.id)
 
 print("DONE")
