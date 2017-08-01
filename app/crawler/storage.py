@@ -17,17 +17,19 @@ class PostGresArchiver(Archiver):
         article = self.retrieve(url)
         if article is None:
             article = Article()
-            self.session.add(article)
 
         article.url = url
         article.html = html
         article.source_id = source_id
-        
+
+        self.session.add(article)
         self.session.commit()
         return article
 
     def retrieve(self, url):
-        article = self.session.query(Article).filter(Article.url == url).one()
+        article = self.session.query(Article)\
+            .filter(Article.url == url)\
+            .one_or_none()
         if article is None:
             print("article for url %s not found" % url)
         else:

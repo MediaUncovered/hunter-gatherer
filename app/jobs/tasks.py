@@ -54,6 +54,8 @@ def run_crawler(label, url, source_id):
     )
     crawler.crawl(url, source_id=source_id)
 
+    session.close()
+
     if definition.process:
         queuer.que_processing(label, url, priority=9)
 
@@ -72,6 +74,7 @@ def run_processor(label, url):
     article.body = document.body
     article.published = document.date
     session.commit()
+    session.close()
 
 
 class Queuer(object):
