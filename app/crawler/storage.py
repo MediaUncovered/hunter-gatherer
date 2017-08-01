@@ -14,8 +14,15 @@ class PostGresArchiver(Archiver):
         self.session = session
 
     def archive(self, url, html, source_id=None):
-        article = Article(url=url, html=html, source_id=source_id)
-        self.session.add(article)
+        article = self.retrieve(url)
+        if article is None:
+            article = Article()
+            self.session.add(article)
+
+        article.url = url
+        article.html = html
+        article.source_id = source_id
+        
         self.session.commit()
         return article
 
