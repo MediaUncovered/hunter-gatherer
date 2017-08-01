@@ -4,6 +4,7 @@ import time
 from sqlalchemy import UniqueConstraint, ForeignKey
 from sqlalchemy import Column, Integer, Unicode, DateTime, LargeBinary
 from sqlalchemy import create_engine
+from sqlalchemy.pool import NullPool
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy_utils.functions import database_exists
@@ -67,7 +68,8 @@ def engine():
     for n in range(1, max_tries+1):
         try:
             if database_exists(db_url):
-                engine = create_engine(db_url, echo=True, echo_pool=True)
+                engine = create_engine(db_url, echo=True, echo_pool=True,
+                                       poolclass=NullPool)
         except:
             pass
 
