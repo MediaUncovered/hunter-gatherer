@@ -18,17 +18,17 @@ class TestProcessingNyTimes(unittest.TestCase):
 
         title_queries = [
             Query(
-                query="//article//h1/text()"
+                query="//div[@id='article']//h1/text()"
             )
         ]
         body_queries = [
             Query(
-                query="//article//p[@class='story-body-text story-content']//text()"
+                query="//div[@id='article']//p[@itemprop='articleBody']//text()"
             )
         ]
         date_queries = [
             Query(
-                query="//time[@class='dateline']/@datetime"
+                query="//meta[@itemprop='datePublished']/@content"
             )
         ]
         date_format=None
@@ -48,12 +48,12 @@ class TestProcessingNyTimes(unittest.TestCase):
 
     def test_title(self):
         # Then it extracts its title
-        expected_title = "Trump Budget Poised to Slash Healthcare for Poor, Other Programs"
+        expected_title = "NOTES ON PEOPLE"
         self.assertEquals(expected_title, self.result.title)
 
     def test_date(self):
         # Then it extracts the publication date
-        expected_datetime = datetime.datetime(2017, 5, 22, 13, 15, 31, tzinfo=tzoffset(None, -14400))
+        expected_datetime = datetime.datetime(1981, 1, 1, 0, 0, 0)
         self.assertEquals(expected_datetime, self.result.date)
 
     def test_body(self):

@@ -3,6 +3,7 @@ import datetime
 import re
 import lxml.html as html
 import chardet
+import crawler.text as text
 from dateutil.parser import parse as parse_date
 
 
@@ -29,6 +30,7 @@ class Processor(object):
 
         title = self.process_queries(url, tree, self.title_queries)
         body = self.process_queries(url, tree, self.body_queries)
+        body = text.remove_newlines(body)
 
         date = None
         date_string = self.process_queries(url, tree, self.date_queries)
