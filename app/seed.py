@@ -1,5 +1,6 @@
-from jobs.tasks import Queuer
 from crawler import model
+from pipes import start
+import ruamel.yaml as yaml
 
 print("started")
 
@@ -13,20 +14,10 @@ session.add(moscow_times_source)
 session.commit()
 
 print("Seeding first task")
-q = Queuer()
+pipe_definition_path = "moscow_times.yaml"
+with open(pipe_definition_path) as stream:
+    pipe_definition = yaml.load(stream, Loader=yaml.Loader)
 
-# q.que(
-#     "MOSCOW_DAY",
-#     u"http://old.themoscowtimes.com/sitemap/free/1992/12/2.html",
-#     moscow_times_source.id)
-
-# q.que(
-#     "MOSCOW_YEAR",
-#     u"http://old.themoscowtimes.com/sitemap/free/1992.html",
-#     moscow_times_source.id)
-
-q.que("MOSCOW_ALL",
-      u"http://old.themoscowtimes.com/sitemap/",
-      moscow_times_source.id)
+start(pipe_definition)
 
 print("DONE")

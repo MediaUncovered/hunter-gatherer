@@ -58,7 +58,7 @@ services:
       - queue:queue
       - storage:storage
       - result:result
-    command: celery worker -A jobs.tasks --loglevel=warning --prefetch-multiplier=64 --task-events
+    command: celery worker -A pipes --loglevel=warning --prefetch-multiplier=64 --task-events
 
   monitor:
     build:
@@ -82,4 +82,4 @@ services:
     depends_on:
       - queue
       - result
-    command: bash -c "sleep 10s; flower -A jobs.tasks --port=5555 --broker=amqp://admin:mypass@queue:5672//;"
+    command: bash -c "sleep 10s; flower -A pipes --port=5555 --broker=amqp://admin:mypass@queue:5672//;"

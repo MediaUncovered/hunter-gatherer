@@ -1,6 +1,10 @@
 import os
+import sys
 from celery import Celery
 from kombu import Connection
+from importlib import import_module
+
+sys.path.append(os.getcwd())
 
 redis_host = os.getenv("RESULT_HOST", None)
 redis_port = os.getenv("RESULT_PORT", 6379)
@@ -29,6 +33,8 @@ broker = Celery('pipes', broker=celery_broker_url, backend=redis_url)
              retry_kwargs={'max_retries': 5})
 def run_job(pipe_definition, job_uuid, arguments):
     pipe_uuid = pipe_definition["uuid"]
+    if job_uuid is None:
+        job_uuid = pipe_definition["jobs"][0]["uuid"]
     print("running %s:%s" % (pipe_uuid, job_uuid))
 
     job_definition = get_job_definition(pipe_definition, job_uuid)
@@ -36,13 +42,13 @@ def run_job(pipe_definition, job_uuid, arguments):
     job_arguments = {**defaults, **arguments}
     job = get_job(job_definition)
 
-    results = job.run(**job_arguments)
+    results = job.run(job_arguments)
 
     next_job_definition = get_next_job_definition(pipe_definition, job_uuid)
     if next_job_definition is not None:
         next_job_uuid = next_job_definition["uuid"]
         for result in results:
-            que_job(pipe_uuid, next_job_uuid, result)
+            que_job(pipe_definition, result, next_job_uuid)
 
 
 def get_job_definition(pipe_definition, job_uuid):
@@ -66,17 +72,26 @@ def get_next_job_definition(pipe_definition, job_uuid):
 
 def get_job(job_definition):
     job_type = job_definition["type"]
-    job = importlib.import_module('jobs.%s' % job_type)
+    job_module = 'jobs.%s' % job_type
+    job = import_module(job_module)
     return job
 
 
-def que_job(self, pipe_uuid, job_uuid, arguments):
-    print("queueing %s:%s" % (pipe_uuid, job_uuid))
-    self.ensure_connection()
-    run_job.apply_async(args=(pipe_uuid, job_uuid, arguments))
+def que_job(pipe_definition, arguments, job_uuid=None):
+    print("queueing %s:%s" % (pipe_definition, job_uuid))
+    ensure_connection()
+    run_job.apply_async(args=(pipe_definition, job_uuid, arguments))
 
 
-def ensure_connection(self):
+def start(pipe_definition):
+    first_job_def = pipe_definition["jobs"][0]
+    job_uuid = first_job_def["uuid"]
+    arguments = first_job_def["arguments"]
+
+    que_job(pipe_definition, arguments, job_uuid)
+
+
+def ensure_connection():
     conn = Connection(celery_broker_url)
     conn.ensure_connection(max_retries=10)
 
