@@ -14,7 +14,8 @@ session.add(moscow_times_source)
 session.commit()
 
 print("Seeding first task")
-pipe_definition_path = "moscow_times.yaml"
+pipe_definition_path = "moscow_times_all.yaml"
+# pipe_definition_path = "moscow_times_day.yaml"
 with open(pipe_definition_path) as stream:
     pipe_definition = yaml.load(stream, Loader=yaml.Loader)
 

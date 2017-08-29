@@ -1,0 +1,35 @@
+uuid: moscow_pipe
+label: Moscow Times Archive Pipe
+jobs:
+
+- uuid: step3
+  label: Moscow Times Day
+  type: crawl
+  arguments:
+    url: "http://old.themoscowtimes.com/sitemap/free/1992/12/2.html"
+    queries:
+      - "//div[@class='content']/div[@class='left']//a/@href"
+    source_id: 1
+  queue: archive
+
+- uuid: step4
+  label: Moscow Times Article Download
+  type: download
+  arguments:
+    url: null # supplied through pipe
+    source_id: null #supplied through pipe
+  queue: article
+
+- uuid: step5
+  label: Moscow Times Article Process
+  type: process
+  arguments:
+    url: null
+    title_queries:
+    - "//div[@class='article_wrap']//h2/text()"
+    body_queries:
+    - "//div[@class='article_text']//text()"
+    date_queries:
+    - "//ul[@class='sochi_article_info sochi_article']/li[2]/text()"
+    date_format: "%b. %d %Y %H:%M "
+  queue: article
