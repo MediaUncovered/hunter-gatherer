@@ -77,18 +77,18 @@ def run_processor(label, url):
     session.close()
 
 
-class Queuer(object):
-
-    def que(self, crawler_label, url, source_id, priority=0):
-        print("queueing crawling %s %s %d" % (crawler_label, url, source_id))
-        self.ensure_connection()
-        run_crawler.apply_async(args=(crawler_label, url, source_id), priority=priority)
-
-    def que_processing(self, processor_label, url, priority=9):
-        print("queueing processing %s %s" % (processor_label, url))
-        self.ensure_connection()
-        run_processor.apply_async(args=(processor_label, url), priority=priority)
-
-    def ensure_connection(self):
-        conn = Connection(celery_broker_url)
-        conn.ensure_connection(max_retries=10)
+# class Queuer(object):
+#
+#     def que(self, crawler_label, url, source_id, priority=0):
+#         print("queueing crawling %s %s %d" % (crawler_label, url, source_id))
+#         self.ensure_connection()
+#         run_crawler.apply_async(args=(crawler_label, url, source_id), priority=priority)
+#
+#     def que_processing(self, processor_label, url, priority=9):
+#         print("queueing processing %s %s" % (processor_label, url))
+#         self.ensure_connection()
+#         run_processor.apply_async(args=(processor_label, url), priority=priority)
+#
+#     def ensure_connection(self):
+#         conn = Connection(celery_broker_url)
+#         conn.ensure_connection(max_retries=10)

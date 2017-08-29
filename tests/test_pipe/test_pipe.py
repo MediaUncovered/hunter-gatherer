@@ -19,7 +19,7 @@ class TestPipe(unittest.TestCase):
             "data/moscow_times_archive.yml"
         )
         with open(pipe_definition_path) as stream:
-            pipe_definition = yaml.load(stream)
+            pipe_definition = yaml.load(stream, Loader=yaml.Loader)
         self.pipe_definition = pipe_definition
 
     def test_get_job_definition(self):

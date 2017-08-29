@@ -5,37 +5,30 @@ import unittest
 import os
 import datetime
 from dateutil.tz import tzoffset
-from crawler.config import Query
-from crawler.processor import Processor
+from crawler.processor import ArticleProcessor
 
 test_dir_path = os.path.dirname(__file__)
 
 
-class TestProcessingNyTimes(unittest.TestCase):
+class TestProcessingNyTimesArticle(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = None
 
         title_queries = [
-            Query(
-                query="//div[@id='article']//h1/text()"
-            )
+            "//div[@id='article']//h1/text()"
         ]
         body_queries = [
-            Query(
-                query="//div[@id='article']//p[@itemprop='articleBody']//text()"
-            )
+            "//div[@id='article']//p[@itemprop='articleBody']//text()"
         ]
         date_queries = [
-            Query(
-                query="//meta[@itemprop='datePublished']/@content"
-            )
+            "//meta[@itemprop='datePublished']/@content"
         ]
-        date_format=None
-        subject = Processor(title_queries=title_queries,
-                            body_queries=body_queries,
-                            date_queries=date_queries,
-                            date_format=date_format)
+        date_format = None
+        subject = ArticleProcessor(title_queries=title_queries,
+                                   body_queries=body_queries,
+                                   date_queries=date_queries,
+                                   date_format=date_format)
 
         # Given an article page of the NY Times
         source_url = "https://www.nytimes.com/reuters/2017/05/22/us/politics/22reuters-usa-budget.html"
@@ -43,7 +36,7 @@ class TestProcessingNyTimes(unittest.TestCase):
         with open(test_data_path, 'rb') as f:
             html_data = f.read()
 
-        # When the article is processed by the Processor class
+        # When the article is processed by the ArticleProcessor class
         self.result = subject.process(source_url, html_data)
 
     def test_title(self):

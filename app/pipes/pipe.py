@@ -22,10 +22,10 @@ rabbitmq_url = 'amqp://%s:%s@%s:%s' % (
 
 celery_broker_url = rabbitmq_url
 
-broker = Celery('jobs.tasks', broker=celery_broker_url, backend=redis_url)
+broker = Celery('pipes', broker=celery_broker_url, backend=redis_url)
 
 
-@broker.task(name="tasks.run_job", autoretry_for=(Exception,),
+@broker.task(name="pipes.run_job", autoretry_for=(Exception,),
              retry_kwargs={'max_retries': 5})
 def run_job(pipe_definition, job_uuid, arguments):
     pipe_uuid = pipe_definition["uuid"]

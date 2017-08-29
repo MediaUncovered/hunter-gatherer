@@ -3,7 +3,6 @@ Crawls an XML/HTML document. It can extract urls for further crawling and
 optionally store the documents it has visited.
 '''
 from lxml import etree
-from crawler.storage import Archiver
 from crawler.fetcher import PhantomFetcher
 import urllib.parse as urlparse
 
@@ -29,41 +28,28 @@ class Crawler(object):
 
     def __init__(self, queries,
                  fetcher=PhantomFetcher(),
-                 archiver=Archiver(),
-                 queuer=None,
-                 version=1,
-                 archive=False,
-                 wait_query=None,
-                 priority=0):
+                 wait_query=None):
         self.queries = queries
-        self.version = version
-        self.archive = archive
         self.wait_query = wait_query
         self.fetcher = fetcher
-        self.archiver = archiver
-        self.queuer = queuer
-        self.priority = priority
 
-    def crawl(self, url, source_id=None):
+    def crawl(self, url):
         print("fetching %s" % url)
         html = self.fetcher.fetch(url, self.wait_query)
-        if self.archive:
-            print("archiving %s" % url)
-            self.archiver.archive(url, html, source_id=source_id)
 
-        if self.queries is not None and self.queuer is not None:
-            print("extracting queries")
-            orders = self.extract(url, html, self.queries, source_id)
-            for order in orders:
-                self.queuer.que(*order, source_id=source_id, priority=self.priority)
+        print("extracting queries")
+        urls = self.extract(url, html, self.queries)
 
-    def extract(self, original_url, html, queries, source_id):
+        return urls
+
+    def extract(self, original_url, html, queries):
         tree = etree.HTML(html)
-        orders = []
+        found_urls = []
         for query in queries:
-            urls = tree.xpath(query.query)
+            urls = tree.xpath(query)
             for url in urls:
-                orders.append(
-                    (query.crawler, urlparse.urljoin(original_url, url, source_id))
+                joined_url = urlparse.urljoin(original_url, url)
+                found_urls.append(
+                    joined_url
                 )
-        return orders
+        return found_urls

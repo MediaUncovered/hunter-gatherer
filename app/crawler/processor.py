@@ -9,6 +9,12 @@ from dateutil.parser import parse as parse_date
 
 class Processor(object):
 
+    def process(self, url, html_binary, encoding=None):
+        raise Exception("Extend this class and implement process()")
+
+
+class ArticleProcessor(Processor):
+
     def __init__(self, title_queries=[], body_queries=[], date_queries=[],
                  date_format=None):
         self.title_queries = title_queries
@@ -47,7 +53,7 @@ class Processor(object):
         result = b''
         space = " ".encode("utf-8")
         for query in queries:
-            matches = tree.xpath(query.query)
+            matches = tree.xpath(query)
             for match in matches:
                 encoded = str(match).encode("utf-8")
                 if len(result) > 0:
