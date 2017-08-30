@@ -9,21 +9,13 @@ import urllib.parse as urlparse
 
 class Crawler(object):
     '''
-    Crawls a page and stores its results in a datastore to await
-    further processing.
+    Crawls a page and returns a set of urls, depending on the queries
+    configured.
     :param queries: an array of Query objects, configuring the Crawler.
     :param fetcher: an implementation of Fetcher.
-    :param archiver: an implementation of Archiver.
-    :param queuer: an implementation of Queuer.
-    :param version: version of the Crawler implementation in case we want to
-                    reprocess some urls with an updated crawler.
-    :param archive: flag dictating if the crawler should store the file after
-                    fetching it.
     :param wait_query: an xpath query that must first produce at least one
                        match, before the page is used for url extraction. This
                        allows pages that use javascript to be crawled.
-
-    :returns: a list of Orders
     '''
 
     def __init__(self, queries,
@@ -33,6 +25,12 @@ class Crawler(object):
         self.wait_query = wait_query
         self.fetcher = fetcher
 
+    '''
+    Fetches the given url with the configured Fetcher and applies the queries
+    to the body of the response.
+    :param url: a url resulting in the html to be crawled
+    :returns: A list of matches for the configured queries.
+    '''
     def crawl(self, url):
         print("fetching %s" % url)
         html = self.fetcher.fetch(url, self.wait_query)
