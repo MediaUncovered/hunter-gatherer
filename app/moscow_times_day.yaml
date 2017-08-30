@@ -7,7 +7,7 @@ jobs:
   type: crawl
   arguments:
     url: "http://old.themoscowtimes.com/sitemap/free/1992/12/2.html"
-    queries:
+    xpaths:
       - "//div[@class='content']/div[@class='left']//a/@href"
     source_id: 1
   queue: archive

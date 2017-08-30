@@ -9,7 +9,8 @@ from crawler.fetcher import RequestFetcher
 def run(arguments):
     print("crawl %s" % arguments)
     url = arguments.get("url")
-    queries = arguments.get("queries")
+    xpaths = arguments.get("xpaths")
+    jsonpaths = arguments.get("jsonpaths")
     source_id = arguments.get("source_id")
     wait_query = arguments.get("wait_query")
 
@@ -19,7 +20,8 @@ def run(arguments):
         fetcher = PhantomFetcher()
 
     print("starting crawler")
-    crawler = Crawler(queries, fetcher=fetcher, wait_query=wait_query)
+    crawler = Crawler(xpaths=xpaths, jsonpaths=jsonpaths, fetcher=fetcher,
+                      wait_query=wait_query)
     found_urls = crawler.crawl(url)
 
     next_arguments = []

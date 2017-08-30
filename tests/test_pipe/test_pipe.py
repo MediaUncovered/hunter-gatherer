@@ -4,7 +4,7 @@ Tests if the crawler stores data
 import unittest
 import unittest.mock
 import os
-import pipes.pipe as pipe
+import pipes
 import ruamel.yaml as yaml
 
 test_dir_path = os.path.dirname(__file__)
@@ -25,7 +25,7 @@ class TestPipe(unittest.TestCase):
     def test_get_job_definition(self):
         # When I search for a job with a specific uuid
         job_uuid = "step3"
-        result = pipe.get_job_definition(self.pipe_definition, job_uuid)
+        result = pipes.get_job_definition(self.pipe_definition, job_uuid)
 
         # Then it will return its definition
         expected = {
@@ -44,7 +44,7 @@ class TestPipe(unittest.TestCase):
     def test_get_next_job_definition(self):
         # When I search for the next job following a job with a specific uuid
         job_uuid = "step3"
-        result = pipe.get_next_job_definition(self.pipe_definition, job_uuid)
+        result = pipes.get_next_job_definition(self.pipe_definition, job_uuid)
 
         # Then it will return its definition
         expected = {

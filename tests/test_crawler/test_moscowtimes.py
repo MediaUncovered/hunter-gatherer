@@ -24,13 +24,13 @@ class TestAllCrawling(unittest.TestCase):
         with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
-        self.queries = [
+        self.xpaths = [
             "//div[@class='block_left']//a/@href",
         ]
 
     def test_extraction(self):
         crawler = Crawler(
-            self.queries,
+            xpaths=self.xpaths,
             fetcher=MockFetcher(self.html_data)
         )
 
@@ -81,13 +81,13 @@ class TestYearCrawling(unittest.TestCase):
         with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
-        self.queries = [
+        self.xpaths = [
             "//div[@class='sitemap_calend']//a/@href",
         ]
 
     def test_extraction(self):
         crawler = Crawler(
-            self.queries,
+            xpaths=self.xpaths,
             fetcher=MockFetcher(self.html_data)
         )
 
@@ -233,13 +233,13 @@ class TestDayCrawling(unittest.TestCase):
         with open(test_data_path, 'r', encoding='cp1251') as f:
             self.html_data = f.read().replace('\n', '')
         # And a Crawler configured to extract article urls
-        self.queries = [
+        self.xpaths = [
             "//div[@class='content']/div[@class='left']//a/@href",
         ]
 
     def test_extraction(self):
         crawler = Crawler(
-            self.queries,
+            xpaths=self.xpaths,
             fetcher=MockFetcher(self.html_data)
         )
 

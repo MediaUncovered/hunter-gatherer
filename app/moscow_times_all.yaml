@@ -6,7 +6,7 @@ jobs:
   type: crawl
   arguments:
     url: "http://old.themoscowtimes.com/sitemap/"
-    queries:
+    xpaths:
       - "//div[@class='block_left']//a/@href"
     source_id: 1
   queue: crawler
@@ -16,7 +16,7 @@ jobs:
   type: crawl
   arguments:
     url: null # supplied through pipe
-    queries:
+    xpaths:
       - "//div[@class='sitemap_calend']//a/@href"
     source_id: null #supplied through pipe
   queue: archive
@@ -26,7 +26,7 @@ jobs:
   type: crawl
   arguments:
     url: null # supplied through pipe
-    queries:
+    xpaths:
       - "//div[@class='content']/div[@class='left']//a/@href"
     source_id: null #supplied through pipe
   queue: archive

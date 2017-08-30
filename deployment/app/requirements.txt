@@ -10,3 +10,4 @@ sqlalchemy==1.1.11
 psycopg2==2.7.1
 sqlalchemy-utils==0.32.14
 ruamel.yaml==0.15.31
+jsonpath-rw==1.4.0
