@@ -39,6 +39,7 @@ def run_job(pipe_definition, job_uuid, arguments):
 
     job_definition = get_job_definition(pipe_definition, job_uuid)
     defaults = job_definition["arguments"]
+    print("\n\n\n\n%r\n\n%r\n\n\n\n" % (defaults, arguments))
     job_arguments = {**defaults, **arguments}
     job = get_job(job_definition)
 
@@ -92,7 +93,10 @@ def get_job(job_definition):
 def que_job(pipe_definition, arguments, job_uuid=None):
     print("queueing %s:%s" % (pipe_definition, job_uuid))
     ensure_connection()
-    run_job.apply_async(args=(pipe_definition, job_uuid, arguments))
+    run_job.apply_async(
+        args=(pipe_definition, job_uuid),
+        kwargs={"arguments": arguments}
+    )
 
 
 def start(pipe_definition):
