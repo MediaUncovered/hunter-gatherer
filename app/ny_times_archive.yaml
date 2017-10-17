@@ -1,0 +1,44 @@
+uuid: ny_times_pipe
+label: NY Times Archive Pipe
+jobs:
+- uuid: step1
+  label: NY Times Archive upper
+  type: paginate
+  recursive: true
+  arguments:
+    source_id: 2
+    paginate_pattern: "https://query.nytimes.com/svc/add/v1/sitesearch.json?end_date=20171231&begin_date=19810101&sort=asc&page={page}&fq=document_type%3A%22article%22&facet=true"
+    paginate_page: 1
+  queue: crawler
+
+- uuid: step2
+  label: NY Times Archive Page
+  type: crawl
+  arguments:
+    url: null # supplied through pipe
+    jsonpaths:
+      - $.response.docs[*].web_url
+    source_id: null #supplied through pipe
+  queue: archive
+
+- uuid: step3
+  label: NY Times Article Download
+  type: download
+  arguments:
+    url: null # supplied through pipe
+    source_id: null #supplied through pipe
+  queue: article
+
+- uuid: step4
+  label: NY Times Article Process
+  type: process
+  arguments:
+    url: null
+    title_queries:
+    - "//div[@id='article']//h1/text()"
+    body_queries:
+    - "//div[@id='article']//p[@itemprop='articleBody']//text()"
+    date_queries:
+    - "//meta[@itemprop='datePublished']/@content"
+    date_format: null
+  queue: article
