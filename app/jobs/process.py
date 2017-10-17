@@ -4,7 +4,7 @@ from crawler.processor import ArticleProcessor
 
 
 def run(arguments):
-    print("process %s" % arguments)
+    print("process %r" % arguments)
     url = arguments.get("url")
     title_queries = arguments.get("title_queries")
     body_queries = arguments.get("body_queries")

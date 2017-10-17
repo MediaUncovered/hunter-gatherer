@@ -5,7 +5,7 @@ from crawler.fetcher import RequestFetcher
 
 
 def run(arguments):
-    print("download %s" % arguments)
+    print("download %r" % arguments)
     url = arguments.get("url")
     source_id = arguments.get("source_id")
     wait_query = arguments.get("wait_query")

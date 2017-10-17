@@ -63,7 +63,8 @@ class Crawler(object):
             print("extracting jsonpaths")
             for path in jsonpaths:
                 expression = parse_json_path(path)
-                json_object = json.loads(body)
+                json_string = body.decode("utf8")
+                json_object = json.loads(json_string)
                 urls = [match.value for match in expression.find(json_object)]
                 for url in urls:
                     joined_url = urlparse.urljoin(original_url, url)

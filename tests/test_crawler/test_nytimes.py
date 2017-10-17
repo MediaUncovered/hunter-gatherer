@@ -62,7 +62,7 @@ class TestJSONArchiveCrawling(unittest.TestCase):
     def setUp(self):
         # Given an archive page of the NY Times
         test_data_path = os.path.join(test_dir_path, 'data/ny_archive_sample.json')
-        with open(test_data_path, 'r', encoding='cp1251') as f:
+        with open(test_data_path, 'rb') as f:
             self.json_data = f.read()
         # And a Crawler configured to extract article urls
         self.jsonpaths = [

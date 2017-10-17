@@ -7,7 +7,7 @@ from crawler.fetcher import RequestFetcher
 
 
 def run(arguments):
-    print("crawl %s" % arguments)
+    print("crawl %r" % arguments)
     url = arguments.get("url")
     xpaths = arguments.get("xpaths")
     jsonpaths = arguments.get("jsonpaths")
