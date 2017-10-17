@@ -1,0 +1,53 @@
+uuid: ny_times_pipe
+label: NY Times Archive Pipe
+jobs:
+- uuid: step1
+  label: NY Times Archive upper
+  type: pager
+  recursive: true
+  arguments:
+    pager_pattern: "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/"
+    source_id: 1
+    pager_page: 1
+  queue: crawler
+
+- uuid: step2
+  label: NY Times Archive Page
+  type: Crawler
+  arguments:
+    url: null # supplied through pipe
+    query: "//li[@class='story noThumb']//a/@href"
+    source_id: null #supplied through pipe
+  queue: crawler
+
+- uuid: step3
+  label: Moscow Times Day
+  type: Crawler
+  arguments:
+    url: null # supplied through pipe
+    query: "//div[@class='content']/div[@class='left']//a/@href"
+    source_id: null #supplied through pipe
+  queue: archive
+
+- uuid: step4
+  label: Moscow Times Article Download
+  type: Downloader
+  arguments:
+    url: null # supplied through pipe
+    source_id: null #supplied through pipe
+  queue: article
+
+- uuid: step5
+  label: Moscow Times Article Process
+  type: ArticleProcessor
+  arguments:
+    url: null
+    uuid: null # supplied through pipe
+    title_queries:
+    - "//div[@class='article_wrap']//h2/text()"
+    body_queries:
+    - "//div[@class='article_text']//text()"
+    date_queries:
+    - "//ul[@class='sochi_article_info sochi_article']/li[2]/text()"
+    date_format: "%b. %d %Y %H:%M "
+  queue: article
