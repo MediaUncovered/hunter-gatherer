@@ -3,7 +3,7 @@ label: NY Times Archive Pipe
 jobs:
 - uuid: step1
   label: NY Times Archive upper
-  type: pager
+  type: Pager
   recursive: true
   arguments:
     pager_pattern: "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/"

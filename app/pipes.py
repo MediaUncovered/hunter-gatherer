@@ -44,8 +44,8 @@ def run_job(pipe_definition, job_uuid, arguments):
 
     results = job.run(job_arguments)
 
-    next_job_definition = get_next_job_definition(pipe_definition, job_uuid)
-    if next_job_definition is not None:
+    next_job_definitions = get_next_job_definitions(pipe_definition, job_uuid)
+    for next_job_definition in next_job_definitions:
         next_job_uuid = next_job_definition["uuid"]
         for result in results:
             que_job(pipe_definition, result, next_job_uuid)
@@ -59,15 +59,27 @@ def get_job_definition(pipe_definition, job_uuid):
                      job_uuid))
 
 
-def get_next_job_definition(pipe_definition, job_uuid):
+def get_next_job_definitions(pipe_definition, job_uuid):
+    definitions = []
+    current_definition = get_job_definition(pipe_definition, job_uuid)
     next_job_definition = None
+
     for job_definition in reversed(pipe_definition["jobs"]):
         if job_definition["uuid"] == job_uuid:
-            return next_job_definition
+            break
         else:
             next_job_definition = job_definition
-    raise ParseError("No next job found for %s:%s" % (pipe_definition["uuid"],
-                     job_uuid))
+
+    if next_job_definition is not None:
+        definitions.append(next_job_definition)
+    if current_definition.get("recursive"):
+        definitions.append(current_definition)
+
+    if len(definitions) == 0:
+        raise ParseError("No next job found for %s:%s" % (pipe_definition["uuid"],
+                         job_uuid))
+
+    return definitions
 
 
 def get_job(job_definition):
