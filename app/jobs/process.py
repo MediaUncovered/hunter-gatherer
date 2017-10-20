@@ -32,4 +32,4 @@ def run(arguments, database=None):
         "body": article.body,
         "published": article.published,
     }
-    return (False, [result])
+    return [result]

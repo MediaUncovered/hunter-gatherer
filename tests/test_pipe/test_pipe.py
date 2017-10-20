@@ -77,7 +77,7 @@ class TestPipeRecursive(unittest.TestCase):
     def test_get_next_job_definitions_including_recursive(self):
         # When I search for the next job following a job with a specific uuid
         job_uuid = "step1"
-        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recusive=True)
+        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recursive=True)
 
         # Then it will return its definitions
         expected = [
@@ -110,7 +110,7 @@ class TestPipeRecursive(unittest.TestCase):
     def test_get_next_job_definitions_excluding_recursive(self):
         # When I search for the next job following a job with a specific uuid
         job_uuid = "step1"
-        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recusive=False)
+        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recursive=False)
 
         # Then it will return its definitions
         expected = [

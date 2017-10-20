@@ -24,4 +24,4 @@ def run(arguments, database=None):
         "url": url,
         "source_id": source_id,
     }
-    return (False, [result])
+    return [result]

@@ -24,13 +24,13 @@ def run(arguments, database=None):
                       wait_query=wait_query)
     found_urls = crawler.crawl(url)
 
-    next_arguments = []
+    results = []
     for found_url in found_urls:
-        next_arguments.append(
+        results.append(
             {
                 "url": found_url,
                 "source_id": source_id
             }
         )
 
-    return (False, next_arguments)
+    return results

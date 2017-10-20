@@ -1,4 +1,5 @@
 import re
+from pipes import RecursionError
 
 
 def run(arguments, database=None):
@@ -8,8 +9,11 @@ def run(arguments, database=None):
     page_max = arguments.get("paginate_page_max", 0)
     source_id = arguments.get("source_id")
 
+    break_recursion = page >= page_max + 1
+    if break_recursion:
+        raise RecursionError("Max page has been reached")
+
     url = re.sub(r"{page}", "%i" % page, pattern)
-    ended = page >= page_max
 
     result = {
         "paginate_pattern": pattern,
@@ -17,4 +21,4 @@ def run(arguments, database=None):
         "url": url,
         "source_id": source_id,
     }
-    return (ended, [result])
+    return [result]

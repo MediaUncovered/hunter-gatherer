@@ -66,11 +66,13 @@ def run_job(pipe_definition, job_uuid, arguments):
     job = get_job(job_definition)
 
     database = run_job.database()
-    end_recursion, results = job.run(job_arguments, database=database)
 
-    next_job_definitions = get_next_job_definitions(pipe_definition,
-                                                    job_uuid,
-                                                    not end_recursion)
+    try:
+        results = job.run(job_arguments, database=database)
+    except RecursionError:
+        print("Recursion was broken")
+
+    next_job_definitions = get_next_job_definitions(pipe_definition, job_uuid)
     for next_job_definition in next_job_definitions:
         next_job_uuid = next_job_definition["uuid"]
         for result in results:
@@ -85,7 +87,7 @@ def get_job_definition(pipe_definition, job_uuid):
                      job_uuid))
 
 
-def get_next_job_definitions(pipe_definition, job_uuid, include_recusive=True):
+def get_next_job_definitions(pipe_definition, job_uuid, include_recursive=True):
     definitions = []
     current_definition = get_job_definition(pipe_definition, job_uuid)
     next_job_definition = None
@@ -98,7 +100,7 @@ def get_next_job_definitions(pipe_definition, job_uuid, include_recusive=True):
 
     if next_job_definition is not None:
         definitions.append(next_job_definition)
-    if include_recusive and current_definition.get("recursive"):
+    if include_recursive and current_definition.get("recursive"):
         definitions.append(current_definition)
 
     return definitions
@@ -134,4 +136,8 @@ def ensure_connection():
 
 
 class ParseError(Exception):
+    pass
+
+
+class RecursionError(Exception):
     pass

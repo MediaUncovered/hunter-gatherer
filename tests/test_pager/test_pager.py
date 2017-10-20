@@ -13,8 +13,9 @@ class TestPagination(unittest.TestCase):
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
             "paginate_page": 1,
             "source_id": 1,
+            "paginate_page_max": 10,
         }
-        ended, result = paginate.run(args)
+        result = paginate.run(args)
 
         expected = [{
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
@@ -31,9 +32,10 @@ class TestPagination(unittest.TestCase):
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
             "paginate_page": 5,
             "source_id": 1,
+            "paginate_page_max": 10,
 
         }
-        ended, result = paginate.run(args)
+        result = paginate.run(args)
 
         expected = [{
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
@@ -43,3 +45,21 @@ class TestPagination(unittest.TestCase):
         }]
 
         self.assertEquals(expected, result)
+
+    def test_max(self):
+
+        args = {
+            "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
+            "paginate_page": 5,
+            "source_id": 1,
+            "paginate_page_max": 0,
+
+        }
+
+        error = None
+        try:
+            paginate.run(args)
+        except Exception as e:
+            error = e
+
+        self.assertIsNotNone(error)
