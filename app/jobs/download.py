@@ -18,12 +18,11 @@ def run(arguments):
     html = fetcher.fetch(url, wait_query)
 
     print("archiving %s" % url)
-    session = model.session()
-    archiver = PostGresArchiver(session)
+    archiver = PostGresArchiver(database)
     archiver.archive(url, html, source_id=source_id)
 
     result = {
         "url": url,
         "source_id": source_id,
     }
-    return [result]
+    return (False, [result])

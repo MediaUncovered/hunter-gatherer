@@ -44,8 +44,11 @@ def run_job(pipe_definition, job_uuid, arguments):
     job = get_job(job_definition)
 
     results = job.run(job_arguments)
+    end_recursion, results = job.run(job_arguments, database=database)
 
-    next_job_definitions = get_next_job_definitions(pipe_definition, job_uuid)
+    next_job_definitions = get_next_job_definitions(pipe_definition,
+                                                    job_uuid,
+                                                    not end_recursion)
     for next_job_definition in next_job_definitions:
         next_job_uuid = next_job_definition["uuid"]
         for result in results:
@@ -60,7 +63,7 @@ def get_job_definition(pipe_definition, job_uuid):
                      job_uuid))
 
 
-def get_next_job_definitions(pipe_definition, job_uuid):
+def get_next_job_definitions(pipe_definition, job_uuid, include_recusive=True):
     definitions = []
     current_definition = get_job_definition(pipe_definition, job_uuid)
     next_job_definition = None
@@ -73,12 +76,8 @@ def get_next_job_definitions(pipe_definition, job_uuid):
 
     if next_job_definition is not None:
         definitions.append(next_job_definition)
-    if current_definition.get("recursive"):
+    if include_recusive and current_definition.get("recursive"):
         definitions.append(current_definition)
-
-    if len(definitions) == 0:
-        raise ParseError("No next job found for %s:%s" % (pipe_definition["uuid"],
-                         job_uuid))
 
     return definitions
 

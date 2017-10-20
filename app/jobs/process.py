@@ -35,4 +35,4 @@ def run(arguments):
         "body": article.body,
         "published": article.published,
     }
-    return [result]
+    return (False, [result])

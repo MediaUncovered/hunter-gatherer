@@ -74,10 +74,10 @@ class TestPipeRecursive(unittest.TestCase):
             pipe_definition = yaml.load(stream, Loader=yaml.Loader)
         self.pipe_definition = pipe_definition
 
-    def test_get_next_job_definitions(self):
+    def test_get_next_job_definitions_including_recursive(self):
         # When I search for the next job following a job with a specific uuid
         job_uuid = "step1"
-        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid)
+        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recusive=True)
 
         # Then it will return its definitions
         expected = [
@@ -101,6 +101,27 @@ class TestPipeRecursive(unittest.TestCase):
                     "pager_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
                     "pager_page": 1,
                     "source_id": 1,
+                },
+                "queue": "crawler"
+            }
+        ]
+        self.assertEquals(expected, result)
+
+    def test_get_next_job_definitions_excluding_recursive(self):
+        # When I search for the next job following a job with a specific uuid
+        job_uuid = "step1"
+        result = pipes.get_next_job_definitions(self.pipe_definition, job_uuid, include_recusive=False)
+
+        # Then it will return its definitions
+        expected = [
+            {
+                "uuid": "step2",
+                "label": "NY Times Archive Page",
+                "type": "Crawler",
+                "arguments": {
+                    "url": None,
+                    "query": "//li[@class='story noThumb']//a/@href",
+                    "source_id": None,
                 },
                 "queue": "crawler"
             }

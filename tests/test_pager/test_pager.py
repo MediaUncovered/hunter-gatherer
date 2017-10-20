@@ -14,7 +14,7 @@ class TestPagination(unittest.TestCase):
             "paginate_page": 1,
             "source_id": 1,
         }
-        result = paginate.run(args)
+        ended, result = paginate.run(args)
 
         expected = [{
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
@@ -33,7 +33,7 @@ class TestPagination(unittest.TestCase):
             "source_id": 1,
 
         }
-        result = paginate.run(args)
+        ended, result = paginate.run(args)
 
         expected = [{
             "paginate_pattern": "https://query.nytimes.com/search/sitesearch/#/*/from19810101to20171231/document_type%3A%22article%22/{page}/allauthors/oldest/",
