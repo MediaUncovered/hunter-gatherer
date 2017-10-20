@@ -14,7 +14,7 @@ session.add(moscow_times_source)
 session.commit()
 print("NY Moscow Times")
 ny_times_source = model.Source(name="New York Times")
-session.add(moscow_times_source)
+session.add(ny_times_source)
 session.commit()
 
 print("Seeding first task")
