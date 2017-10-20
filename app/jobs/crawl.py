@@ -6,7 +6,7 @@ from crawler.fetcher import PhantomFetcher
 from crawler.fetcher import RequestFetcher
 
 
-def run(arguments):
+def run(arguments, database=None):
     print("crawl %r" % arguments)
     url = arguments.get("url")
     xpaths = arguments.get("xpaths")

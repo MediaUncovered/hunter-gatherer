@@ -1,9 +1,8 @@
-from crawler import model
 from crawler.storage import PostGresArchiver
 from crawler.processor import ArticleProcessor
 
 
-def run(arguments):
+def run(arguments, database=None):
     print("process %r" % arguments)
     url = arguments.get("url")
     title_queries = arguments.get("title_queries")
@@ -11,8 +10,7 @@ def run(arguments):
     date_queries = arguments.get("date_queries")
     date_format = arguments.get("date_format")
 
-    session = model.session()
-    archiver = PostGresArchiver(session)
+    archiver = PostGresArchiver(database)
     article = archiver.retrieve(url)
 
     processor = ArticleProcessor(
@@ -26,8 +24,7 @@ def run(arguments):
     article.title = document.title
     article.body = document.body
     article.published = document.date
-    session.commit()
-    session.close()
+    database.commit()
 
     result = {
         "url": url,

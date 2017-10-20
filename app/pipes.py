@@ -1,8 +1,30 @@
 import os
 import sys
+from crawler import model
 from celery import Celery
+from celery import Task
 from kombu import Connection
 from importlib import import_module
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+
+class SqlAlchemyTask(Task):
+    """An abstract Celery Task that ensures that the connection the the
+    database is closed on task completion"""
+    abstract = True
+
+    _Session = None
+
+    def database(self):
+        if self._Session is None:
+            eng = model.engine()
+            self._Session = scoped_session(sessionmaker(eng))
+        return self._Session()
+
+    def after_return(self, status, retval, task_id, args, kwargs, einfo):
+        if self._Session is not None:
+            self._Session.remove()
+
 
 sys.path.append(os.getcwd())
 
@@ -29,8 +51,8 @@ celery_broker_url = rabbitmq_url
 broker = Celery('pipes', broker=celery_broker_url, backend=redis_url)
 
 
-@broker.task(name="pipes.run_job", autoretry_for=(Exception,),
-             retry_kwargs={'max_retries': 5})
+@broker.task(name="pipes.run_job", base=SqlAlchemyTask,
+             autoretry_for=(Exception,), retry_kwargs={'max_retries': 5})
 def run_job(pipe_definition, job_uuid, arguments):
     pipe_uuid = pipe_definition["uuid"]
     if job_uuid is None:
@@ -43,7 +65,7 @@ def run_job(pipe_definition, job_uuid, arguments):
     job_arguments = {**defaults, **arguments}
     job = get_job(job_definition)
 
-    results = job.run(job_arguments)
+    database = run_job.database()
     end_recursion, results = job.run(job_arguments, database=database)
 
     next_job_definitions = get_next_job_definitions(pipe_definition,

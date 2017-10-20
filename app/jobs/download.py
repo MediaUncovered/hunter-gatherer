@@ -1,10 +1,9 @@
-from crawler import model
 from crawler.storage import PostGresArchiver
 from crawler.fetcher import PhantomFetcher
 from crawler.fetcher import RequestFetcher
 
 
-def run(arguments):
+def run(arguments, database=None):
     print("download %r" % arguments)
     url = arguments.get("url")
     source_id = arguments.get("source_id")
