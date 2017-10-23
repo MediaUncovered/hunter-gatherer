@@ -7,9 +7,9 @@ jobs:
   recursive: true
   arguments:
     source_id: 2
-    paginate_pattern: "https://query.nytimes.com/svc/add/v1/sitesearch.json?end_date=20171231&begin_date=19810101&sort=asc&page={page}&fq=document_type%3A%22article%22&facet=true"
+    paginate_pattern: "https://query.nytimes.com/svc/add/v1/sitesearch.json?begin_date=365daysago&sort=desc&page={page}&fq=document_type%3A%22article%22%20AND%20section_name:%22World%22%20OR%20subsection_name:%22World%22&facet=true"
     paginate_page: 1
-    paginate_page_max: 50000
+    paginate_page_max: 121
   queue: crawler
 
 - uuid: step2

@@ -4,11 +4,11 @@ import ruamel.yaml as yaml
 
 print("started")
 
-session = model.session()
-print("add NY Times")
-ny_times_source = model.Source(name="New York Times")
-session.add(ny_times_source)
-session.commit()
+# session = model.session()
+# print("add NY Times")
+# ny_times_source = model.Source(name="New York Times")
+# session.add(ny_times_source)
+# session.commit()
 
 print("Seeding first NY times task")
 pipe_definition_path = "ny_times_archive.yaml"
